@@ -1,0 +1,33 @@
+{
+  "name"        : "trivial-server",
+  "version"     : "0.0.1-pre",
+  "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
+  "author"      : "Glen E. Ivey",
+  "repository"  : {
+    "type": "git",
+    "url" : "http://github.com/npm/npm.git"
+  },
+  "licenses"    : [
+    {
+      "type": "AGPLv3",
+      "url": "http://www.gnu.org/licenses/agpl-3.0.html"
+    }
+  ],
+  "main": "index",
+  "engines": {
+    "node": "~0.10.0"
+  },
+  "engineStrict": true,
+  "dependencies": {
+    "express": "4.1.1",
+    "express-hbs": "0.7.9",
+    "marked": "0.3.2",
+    "node-sass": "0.9.3",
+    "string.prototype.endswith": "0.2.0",
+    "when": "3.2.3"
+  },
+  "optionalDependencies": {
+  },
+  "devDependencies": {
+  }
+}
