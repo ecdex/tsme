@@ -1,10 +1,9 @@
 var express = require('express'),
-    markdown = require('markdown'),
-    when = require('when');
+    Promise = require('bluebird');
 
 function init(options) {
   var app = express(),
-      deferred = when.defer(),
+      deferred = Promise(),
       serverFactory = require('./core/server');
 
   options.app = app;
