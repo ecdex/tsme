@@ -14,6 +14,10 @@
     }
   ],
   "main": "index",
+  "scripts": {
+    "start": "source envs/development.sh ; node index",
+    "test":  "source envs/test.sh ; ./node_modules/.bin/grunt validate --verbose"
+  },
   "engines": {
     "node": "~0.10.0"
   },
@@ -22,6 +26,7 @@
     "bluebird": "2.3.0",
     "express": "4.9.2",
     "express-hbs": "0.7.11",
+    "lodash": "2.4.1",
     "marked": "0.3.2",
     "node-sass": "0.9.3",
     "string.prototype.endswith": "0.2.0"
@@ -29,5 +34,18 @@
   "optionalDependencies": {
   },
   "devDependencies": {
+    "environmental": "~1.2.0",
+    "grunt": "~0.4.5",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-express-server": "~0.4.19",
+    "grunt-jscs": "~0.8.1",
+    "grunt-mocha-cli": "~1.10.0",
+    "matchdep": "~0.3.0",
+    "mocha": "~1.21.4",
+    "nock": "0.47.0",
+    "rewire": "~2.1.0",
+    "should": "~4.0.4",
+    "sinon": "~1.10.3",
+    "supertest": "~0.13.0"
   }
 }
