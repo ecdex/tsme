@@ -15,8 +15,8 @@
   ],
   "main": "index",
   "scripts": {
-    "start": "source envs/development.sh ; node index",
-    "test":  "source envs/test.sh ; ./node_modules/.bin/grunt validate --verbose"
+    "start": "/usr/bin/env bash -c 'source envs/development.sh ; node server'",
+    "test":  "/usr/bin/env bash -c 'source envs/test.sh        ; ./node_modules/.bin/grunt validate --verbose'"
   },
   "engines": {
     "node": "~0.10.0"
@@ -30,8 +30,6 @@
     "marked": "0.3.2",
     "node-sass": "0.9.3",
     "string.prototype.endswith": "0.2.0"
-  },
-  "optionalDependencies": {
   },
   "devDependencies": {
     "environmental": "~1.2.0",

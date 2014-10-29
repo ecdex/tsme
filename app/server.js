@@ -1,22 +1,26 @@
 require("string.prototype.endswith");
+
 var express = require("express"),
     fs = require("fs"),
     hbs = require("express-hbs"),
     marked = require("marked"),
     path = require("path"),
     sass = require("node-sass"),
-    when = require("when"),
-
-    envVar = "development",
-
+    config = require("environmental").config(),
     markdownEncoding = "utf8",
-    app,
-    configForEnvironment,
     contentBasePath;
 
+function pagesPath() {
+  return path.join(contentBasePath, "pages");
+}
+
+function templateForPage() {  // eventual signature is markdownPath in
+  return "default";
+}
+
 function server(req, res, next) {
-  var mdPath = req.url.replace(/\.[^.]+$/, ""),
-      absolutePath = path.join(contentBasePath, "pages", mdPath+".md");
+  var markdownPath = req.url.replace(/\.[^.]+$/, ""),
+      absolutePath = path.join(pagesPath(), markdownPath+".md");
 
   if (absolutePath.endsWith("/.md")) {
     absolutePath = absolutePath.replace("/.md", "/index.md");
@@ -31,67 +35,33 @@ function server(req, res, next) {
   }
 
   var htmlContent = marked(markdownContent);
-  res.render("index", {
+  res.render(templateForPage(markdownPath), {
     contentFromMarkdown: htmlContent
   });
 }
 
-function serverFactory(options) {
-  var deferred = when.defer();
-
-  app = options.app;
-
-  readConfigurationForCurrentEnvironment(options, deferred);
-  if (!configForEnvironment) {
-    return deferred.promise;
-  }
-
-  getContentBasePath(deferred);
-  if (!contentBasePath) {
-    return deferred.promise;
-  }
-
-  configureAppForHandlebars(app);
-  configureAppForSass(app);
-
-  app.use(server);
-  deferred.resolve(server);
-  return deferred.promise;
-}
-
-
-function readConfigurationForCurrentEnvironment(options, deferred) {
-  configFileName = options.config;
-  try {
-    wholeConfig = require(configFileName);
-    configForEnvironment = wholeConfig[envVar];
-  } catch (ignore) {
-  }
-
-  if (!configForEnvironment) {
-    deferred.reject(
-            "Cannot find your config file, '" + configFileName + "', or it has no section for '" +
-            envVar + "'."
-    );
+function directoryExistsOrDie(path, message) {
+  if (!fs.existsSync(path)) {
+    console.log(message);
+    process.exit(1);
   }
 }
 
-function getContentBasePath(deferred) {
-  if (configForEnvironment.content) {
-    markdownEncoding = configForEnvironment.content.encoding || markdownEncoding;
-  }
+function setContentBasePath() {
+  markdownEncoding = config.content.encoding || markdownEncoding;
 
-  contentBasePath = configForEnvironment.paths.contentPath;
-  if (!fs.existsSync(contentBasePath)) {
-    deferred.reject(
-            "Cannot find your content directory, '" + contentBasePath +
-            "', as specified by config.paths.contentPath in '" + configFileName + "'."
-    );
-  }
-  return contentBasePath;
+  contentBasePath = config.content.basepath;
+  directoryExistsOrDie(contentBasePath,
+      "Cannot find your content directory, '" + contentBasePath + "',\n" +
+      " as specified by config.content.basepath from the environment."
+  );
+  directoryExistsOrDie(pagesPath(),
+      "Cannot find your directory for page Markdown, '" + contentBasePath + "',\n" +
+      " 'pages' under the directory from config.content.basepath."
+  );
 }
 
-function configureAppForHandlebars() {
+function configureAppForHandlebars(app) {
   app.set("view engine", "hbs");
   app.set("views", path.join(contentBasePath, "templates"));
   app.engine("hbs", hbs.express3({
@@ -100,7 +70,7 @@ function configureAppForHandlebars() {
   }));
 }
 
-function configureAppForSass() {
+function configureAppForSass(app) {
   app.use(sass.middleware({
     debug: true,
     src: path.join(contentBasePath, "sass"),
@@ -112,4 +82,20 @@ function configureAppForSass() {
 }
 
 
-module.exports = serverFactory;
+function serverFactory() {
+  var app = express();
+
+  setContentBasePath();
+  configureAppForHandlebars(app);
+  configureAppForSass(app);
+
+  app.use(server);
+
+  var port = parseInt(config.server.port )|| 3000;
+  app.listen(port);
+  console.log("Express server listening on port " + port);
+}
+
+module.exports = {
+  launch: serverFactory
+};

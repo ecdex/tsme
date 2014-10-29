@@ -44,8 +44,6 @@
     "disallowPaddingNewlinesInBlocks": true,
     "disallowEmptyBlocks": true,
     "requireSpacesInsideObjectBrackets": "all",
-//    "requireSpacesInsideArrayBrackets": "nested",
-//    "disallowSpacesInsideParentheses": true,
     "disallowQuotedKeysInObjects": true,
     "disallowSpaceAfterObjectKeys": true,
     "requireCommaBeforeLineBreak": true,
@@ -87,6 +85,5 @@
         "checkRedundantParams": true,
         "requireParamTypes": true
     },
-    "requireSpaceAfterLineComment": true,
     "disallowNewlineBeforeBlockStatements": true
 }

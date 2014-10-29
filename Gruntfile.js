@@ -22,11 +22,16 @@ function configureGrunt(grunt) {
   };
 
   grunt.initConfig({
-    jshint: lintableFiles,
-    jscs: _.merge(lintableFiles, {
+    jshint: _.merge({
+      options: {
+        jshintrc: ".jshintrc"
+      }
+    }, lintableFiles),
+    jscs: _.merge({
       app: { options: {} },
       test: { options: {} }
-    }),
+    }, lintableFiles),
+
     express: {
       test: {
         options: {
