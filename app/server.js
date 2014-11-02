@@ -91,7 +91,7 @@ function serverFactory() {
 
   app.use(server);
 
-  var port = parseInt(config.server.port )|| 3000;
+  var port = parseInt(config.server.port) || 3000;
   app.listen(port);
   console.log("Express server listening on port " + port);
 }

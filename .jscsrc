@@ -54,7 +54,9 @@
         "==",
         "===",
         "!=",
-        "!=="
+        "!==",
+        "||",
+        "&&"
     ],
     "disallowSpaceBeforeBinaryOperators": [
         ","
@@ -65,7 +67,9 @@
         "==",
         "===",
         "!=",
-        "!=="
+        "!==",
+        "||",
+        "&&"
     ],
     "requireCamelCaseOrUpperCaseIdentifiers": "ignoreProperties",
     "disallowKeywords": [ "with" ],

@@ -35,6 +35,7 @@
     "environmental": "~1.2.0",
     "grunt": "~0.4.5",
     "grunt-contrib-jshint": "~0.10.0",
+    "grunt-environmental": "~0.1.0",
     "grunt-express-server": "~0.4.19",
     "grunt-jscs": "~0.8.1",
     "grunt-mocha-cli": "~1.10.0",

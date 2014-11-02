@@ -43,17 +43,18 @@ function configureGrunt(grunt) {
 
     mochacli: {
       unit: {
-        options: { files: ["test/unit/**/*.js"] }
+        options: {
+          filesRaw: ["test/*.js", "test/unit/**/*.js"],
+          "check-leaks": true
+        }
       }
     }
   });
 
+  grunt.registerTask("test", "run automated tests", ["environmental", "mochacli:unit"]);
   grunt.registerTask("validate", "run all the checks and tests",
-      ["jshint", "jscs", "mochacli:unit"]
-  );
-  grunt.registerTask("default", "install, test, and run",
-      ["validate"]
-  );
+      ["jshint", "jscs", "test"]);
+  grunt.registerTask("default", "install, test, and run", ["validate"]);
 }
 
 // Export the configuration
