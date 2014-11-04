@@ -51,7 +51,7 @@ function configureGrunt(grunt) {
     }
   });
 
-  grunt.registerTask("test", "run automated tests", ["environmental", "mochacli:unit"]);
+  grunt.registerTask("test", "run automated tests", ["environmental:test", "mochacli:unit"]);
   grunt.registerTask("validate", "run all the checks and tests",
       ["jshint", "jscs", "test"]);
   grunt.registerTask("default", "install, test, and run", ["validate"]);
