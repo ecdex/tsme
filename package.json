@@ -16,7 +16,7 @@
   "main": "index",
   "scripts": {
     "start": "/usr/bin/env bash -c 'source envs/development.sh ; node server'",
-    "test":  "/usr/bin/env bash -c 'source envs/test.sh        ; ./node_modules/.bin/grunt validate --verbose'"
+    "test":  "grunt validate"
   },
   "engines": {
     "node": "~0.10.0"
