@@ -87,7 +87,7 @@ function configureAppForHandlebars(app) {
 //}
 
 
-function serverFactory() {
+function setup() {
   markdownEncoding = config.content.encoding || "utf8";
   setContentBasePath();
 
@@ -96,12 +96,20 @@ function serverFactory() {
 //  configureAppForSass(app);
 
   app.use(server);
+  return app;
+}
 
+function serverFactory() {
   var port = parseInt(config.server.port) || 3000;
-  app.listen(port);
+  setup().listen(port);
   output.stdout("Express server listening on port " + port);
 }
 
+function middlewareFactory() {
+  return setup();
+}
+
 module.exports = {
-  launch: serverFactory
+  launch: serverFactory,
+  middleware: middlewareFactory
 };

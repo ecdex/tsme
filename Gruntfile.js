@@ -15,7 +15,9 @@ function configureGrunt(grunt) {
     test: {
       files: {
         src: [
-          "test/**/*.js"
+          "test/*.js",
+          "test/unit/**/*.js",
+          "test/fixtures/middleware_test_server/*.js"
         ]
       }
     }
