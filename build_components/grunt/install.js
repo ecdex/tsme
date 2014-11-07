@@ -24,7 +24,8 @@ function loadInstallTasks(grunt) {
         command: "mkdir -p envs && cp -a test/fixtures/build_envs/* envs/"
       },
       "install-test-server": {
-        command: "npm install --silent",
+        //command: "npm install --silent",
+command: "npm install",
         options: {
           execOptions: {
             cwd: "test/fixtures/middleware_test_server"
