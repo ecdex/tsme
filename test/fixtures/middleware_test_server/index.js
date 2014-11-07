@@ -23,7 +23,7 @@ app.use(function (req, res) {
   res.status(404).send("Sorry, can't find that.");
 });
 
-var portNumber = 2360;
+var portNumber = 3000;
 app.listen(portNumber);
 console.log("Test application is listening on port " + portNumber);
 console.log("Ctrl+C to shut down");

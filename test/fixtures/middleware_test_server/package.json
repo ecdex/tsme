@@ -3,7 +3,7 @@
   "description": "Minimal Express server, intended solely to load tsme as middleware for testing.",
   "version": "1.0.0",
   "dependencies": {
-    "express": "~4.9.2",
+    "express": "~4.10.1",
     "tsme": "../../../"
   }
 }

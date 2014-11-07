@@ -4,7 +4,7 @@ var path = require("path"),
 
 /*global rewireInApp: true */
 rewireInApp = function (appRelativePath) {
-  return rewire(path.join(__dirname, "..", "app", appRelativePath));
+  return rewire(path.join(__dirname, "..", "..", "app", appRelativePath));
 };
 
 /*global mockExpressFactory: true */

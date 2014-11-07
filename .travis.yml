@@ -2,6 +2,4 @@ language: node_js
 node_js:
   - "0.10"
 before_install: npm install -g grunt-cli
-before_script:
-  - mkdir -p envs
-  - cp -a test/fixtures/build_envs/* envs/
+before_script:  grunt install
