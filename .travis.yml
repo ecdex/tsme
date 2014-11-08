@@ -7,4 +7,6 @@ before_install:
   - "export DISPLAY_PORT=:99"
   - "export DISPLAY=$DISPLAY_PORT.0"
   - "/sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- $DISPLAY_PORT -ac -screen 0 1024x768x16"
-before_script:  grunt install
+before_script:
+  - phantomjs --version
+  - grunt install

@@ -4,8 +4,14 @@ var webdriver = require('selenium-webdriver'),
 
 var helpers = {
   getWebdriver: function (browserName) {
-    browserName = browserName || "Firefox";
+    browserName = browserName || "PhantomJs";
     return helpers["get" + browserName]();
+  },
+
+  getPhantomJs: function () {
+    return new webdriver.Builder().
+        withCapabilities(webdriver.Capabilities.phantomjs()).
+        build();
   },
 
   getFirefox: function () {
