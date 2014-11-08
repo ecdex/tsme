@@ -5,10 +5,10 @@ function loadInstallTasks(grunt) {
 
   grunt.registerTask("test-integration-server",
       "run automated integration tests (live browser, chromedriver) against tsme as stand-alone server",
-      ["environmental:test", "express:test-server", "mochacli:integration", "express:test-server:stop"]);
+      ["environmental:test:stand-alone", "express:test-server", "mochacli:integration", "express:test-server:stop"]);
   grunt.registerTask("test-integration-middleware",
       "run automated integration tests (live browser, chromedriver) against tsme as a middleware module",
-      ["environmental:test", "express:test-middleware", "mochacli:integration", "express:test-middleware:stop"]);
+      ["environmental:test:middleware", "express:test-middleware", "mochacli:integration", "express:test-middleware:stop"]);
   grunt.registerTask("test-integration", "run automated integration tests (live browser, chromedriver)",
       ["test-integration-server", "test-integration-middleware"]);
 
@@ -28,6 +28,15 @@ function loadInstallTasks(grunt) {
       }
     },
 
+    environmental: {
+      options: {
+        inject: {
+          "stand-alone": { INTEGRATION_ROOT: "/" },
+          middleware:    { INTEGRATION_ROOT: "/subsite/" }
+        }
+      }
+    },
+
     mochacli: {
       options: {
         "check-leaks": true
@@ -36,7 +45,7 @@ function loadInstallTasks(grunt) {
         filesRaw: ["test/unit/**/*_helper.js", "test/unit/**/*_spec.js"]
       } },
       integration: { options: {
-        filesRaw: ["test/integration/**/*_spec.js"]
+        filesRaw: ["test/integration/**/*_globals.js", "test/integration/**/*_spec.js"]
       } }
     }
   };
