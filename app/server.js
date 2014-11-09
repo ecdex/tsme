@@ -95,6 +95,8 @@ function setup() {
   configureAppForHandlebars(app);
 //  configureAppForSass(app);
 
+  var oneYear = 31536000000;
+  app.use("/assets", express["static"]("public/assets", { maxAge: oneYear }));
   app.use(server);
   return app;
 }

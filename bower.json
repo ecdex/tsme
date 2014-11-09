@@ -1,0 +1,6 @@
+{
+  "name": "ghost",
+  "dependencies": {
+    "bootstrap": "3.3.0"
+  }
+}

@@ -1,9 +1,78 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Real Title Goes HERE</title>
+    <!-- from/for Bootstrap -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{{title}}</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <!-- Bootstrap -->
+    {{#if productionLike}}
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    {{else}}
+      <link id="bootstrap-css-load" rel="stylesheet">
+      <script type="text/javascript">
+        resourcesWeShouldHaveLoaded = {};
+        (function () {
+          resourcesWeShouldHaveLoaded["bootstrap-css"] = false;
+          var el = document.getElementById("bootstrap-css-load");
+          el.onload = function() { resourcesWeShouldHaveLoaded["bootstrap-css"] = "loaded"; };
+          el.href = "assets/css/bootstrap.min.css";
+        })();
+      </script>
+    {{/if}}
+
+    <!-- from/for Bootstrap -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
   </head>
   <body>
-    {{{contentFromMarkdown}}}
+    <div class="container">
+      {{{contentFromMarkdown}}}
+    </div><!-- /.container -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    {{#if productionLike}}
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    {{else}}
+      <script id="jquery" src="assets/js/jquery.min.js"></script>
+    {{/if}}
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    {{#if productionLike}}
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    {{else}}
+      <script id="bootstrap-js-load"></script>
+      <script type="text/javascript">
+        resourcesWeShouldHaveLoaded["bootstrap-js"] = false;
+        (function () {
+          var el = document.getElementById("bootstrap-js-load");
+          el.onload =
+              function () {
+                resourcesWeShouldHaveLoaded["bootstrap-js"] = "loaded"; };
+          el.src = "assets/js/bootstrap.min.js";
+        })();
+      </script>
+    {{/if}}
+
+    {{#unless productionLike}}
+      <script type="text/javascript">
+        window.onload = function () {
+          for (var key in resourcesWeShouldHaveLoaded) {
+            if (resourcesWeShouldHaveLoaded.hasOwnProperty(key) &&
+                resourcesWeShouldHaveLoaded[key] !== "loaded") {
+              console.log("Error: didn't load asset nicknamed '" + key + "' by completion of page load.  Something is probably wrong.");
+            }
+          }
+        };
+      </script>
+    {{/unless}}
   </body>
 </html>

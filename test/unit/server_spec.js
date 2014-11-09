@@ -1,12 +1,13 @@
-/*globals describe, it, beforeEach, afterEach, rewireInApp, mockExpressFactory, buildFailureOnCall */
+/*globals describe, it, beforeEach, afterEach, rewireInApp, buildFailureOnCall */
 /*jshint expr:true*/
 
-var should = require("should"),
+var should = require("should"),                           // jshint ignore:line
     sinon = require("sinon"),
     environmental = require("environmental"),
-    server = rewireInApp("server");
+    _ = require("lodash"),
+    helpers = require("./test_helpers"),
 
-should.equal(true, true);      // To stop jshint complaining
+    server = rewireInApp("server");
 
 
 describe("top-level server", function () {
@@ -90,18 +91,38 @@ describe("top-level server", function () {
         stdoutStub;
 
     beforeEach(function () {
-      server.__set__("express", mockExpressFactory(expressStubContainer));
+      server.__set__("express", helpers.mockExpressFactory(expressStubContainer));
       stdoutStub = sandbox.stub(server.__get__("output"), "stdout");
     });
 
     function commonBehaviors(factory) {
-      it("calls use() to connect a server instance", function () {
+      it("calls use() to map the static assets path", function () {
         factory();
-        var appStub = expressStubContainer.appStub;
-        appStub.use.calledOnce.should.be.true;
-        var args = appStub.use.getCall(0).args;
-        args.length.should.equal(1);
-        args[0].should.be.a.Function;
+        var appStub = expressStubContainer.appStub,
+            useAssetsCalls = _.select(appStub.use.args, function (callArgs) {
+              return callArgs[0] === "/assets";
+            });
+
+        useAssetsCalls.length.should.equal(1);
+        useAssetsCalls[0].length.should.equal(2);
+
+        // second argument to .use would normally be an Express server function,
+        // but thanks to mockExpressFactory, it will be a hash of test info
+        useAssetsCalls[0][1].spyFunctionName.should.equal("static");
+        useAssetsCalls[0][1].arguments[0].should.equal("public/assets");
+        useAssetsCalls[0][1].arguments[1].should.eql({ maxAge: 31536000000 });
+      });
+
+      it("calls use() to connect a root server instance", function () {
+        factory();
+        var appStub = expressStubContainer.appStub,
+            rootUseCalls = _.select(appStub.use.args, function (callArgs) {
+              return typeof callArgs[0] === "function";
+            });
+
+        rootUseCalls.length.should.equal(1);
+        rootUseCalls[0].length.should.equal(1);
+        helpers.shouldBeAnInstanceOfExpress(rootUseCalls[0][0]);
       });
 
       describe("markdownEncoding", function () {
@@ -141,7 +162,9 @@ describe("top-level server", function () {
 
         beforeEach(function () {
           factory();
-          requestHandler = expressStubContainer.appStub.use.getCall(0).args[0];
+          requestHandler = _.detect(expressStubContainer.appStub.use.args, function (callArgs) {
+                return typeof callArgs[0] === "function";
+              })[0];
         });
 
         it("serves content/pages/index.md in content/pages/templates/default.hbs for root", function (done) {
