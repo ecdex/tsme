@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <!-- from/for Bootstrap -->
     <meta charset="utf-8">
@@ -11,21 +11,14 @@
     <meta name="author" content="">
     <link rel="icon" href="/favicon.ico">
 
+    {{install_resource_loading_errorcheck_functions}}
+
     <!-- Bootstrap -->
-    {{#if productionLike}}
-      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
-    {{else}}
-      <link id="bootstrap-css-load" rel="stylesheet">
-      <script type="text/javascript">
-        resourcesWeShouldHaveLoaded = {};
-        (function () {
-          resourcesWeShouldHaveLoaded["bootstrap-css"] = false;
-          var el = document.getElementById("bootstrap-css-load");
-          el.onload = function() { resourcesWeShouldHaveLoaded["bootstrap-css"] = "loaded"; };
-          el.href = "assets/css/bootstrap.min.css";
-        })();
-      </script>
-    {{/if}}
+    {{load_css
+        nickname="bootstrap-css"
+        production_path="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
+        development_path="assets/css/bootstrap.min.css"
+    }}
 
     <!-- from/for Bootstrap -->
     <!--[if lt IE 9]>
@@ -42,37 +35,17 @@
     {{#if productionLike}}
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     {{else}}
-      <script id="jquery" src="assets/js/jquery.min.js"></script>
+      <script src="assets/js/jquery.min.js"></script>
     {{/if}}
+
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    {{#if productionLike}}
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-    {{else}}
-      <script id="bootstrap-js-load"></script>
-      <script type="text/javascript">
-        resourcesWeShouldHaveLoaded["bootstrap-js"] = false;
-        (function () {
-          var el = document.getElementById("bootstrap-js-load");
-          el.onload =
-              function () {
-                resourcesWeShouldHaveLoaded["bootstrap-js"] = "loaded"; };
-          el.src = "assets/js/bootstrap.min.js";
-        })();
-      </script>
-    {{/if}}
+    {{load_js
+        nickname="bootstrap-js"
+        production_path="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"
+        development_path="assets/js/bootstrap.min.js"
+    }}
 
-    {{#unless productionLike}}
-      <script type="text/javascript">
-        window.onload = function () {
-          for (var key in resourcesWeShouldHaveLoaded) {
-            if (resourcesWeShouldHaveLoaded.hasOwnProperty(key) &&
-                resourcesWeShouldHaveLoaded[key] !== "loaded") {
-              console.log("Error: didn't load asset nicknamed '" + key + "' by completion of page load.  Something is probably wrong.");
-            }
-          }
-        };
-      </script>
-    {{/unless}}
+    {{perform_resouce_loading_errorcheck}}
   </body>
 </html>

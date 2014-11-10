@@ -7,7 +7,10 @@ var express = require("express"),
     marked = require("marked"),
 //    sass = require("node-sass"),
     config = require("environmental").config(),
+
     output = require("./output_helper"),
+    helpers = require("./handlebars_helpers"),
+
     markdownEncoding,
     contentBasePath;
 
@@ -94,6 +97,7 @@ function setup() {
   var app = express();
   configureAppForHandlebars(app);
 //  configureAppForSass(app);
+  helpers.registerHelpers();
 
   var oneYear = 31536000000;
   app.use("/assets", express["static"]("public/assets", { maxAge: oneYear }));

@@ -2,21 +2,18 @@
   "name"        : "tsme",
   "version"     : "0.0.1-pre",
   "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
+  "keywords": [ "node", "express", "markdown", "bootstrap" ],
   "author"      : "Glen E. Ivey",
   "homepage": "https://github.com/ecdex/tsme",
   "repository"  : {
     "type": "git",
     "url" : "https://github.com/ecdex/tsme.git"
   },
-  "bugs": {
-    "url": "https://github.com/ecdex/tsme/issues"
-  },
-  "licenses"    : [
-    {
+  "bugs": { "url": "https://github.com/ecdex/tsme/issues" },
+  "licenses": [ {
       "type": "AGPLv3",
       "url": "http://www.gnu.org/licenses/agpl-3.0.html"
-    }
-  ],
+    } ],
   "main": "server",
   "scripts": {
     "start": "/usr/bin/env bash -c 'source envs/development.sh ; node server'",
@@ -38,7 +35,7 @@
     "bower": "^1.3.12",
     "environmental": "^1.2.0",
     "grunt": "^0.4.5",
-    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-copy": "^0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-environmental": "^0.1.0",
     "grunt-express-server": "^0.4.19",
@@ -47,7 +44,6 @@
     "grunt-shell": "^1.1.1",
     "matchdep": "^0.3.0",
     "mocha": "^2.0.1",
-    "nock": "0.47.0",
     "rewire": "^2.1.0",
     "selenium-webdriver": "^2.43.5",
     "should": "^4.0.4",

@@ -157,6 +157,12 @@ describe("top-level server", function () {
         engineStub.args[0][1].should.be.a.Function;
       });
 
+      it("installs our Handlebars helpers", function () {
+        var installStub = sandbox.stub(server.__get__("helpers"), "registerHelpers");
+        factory();
+        installStub.calledOnce.should.be.true;
+      });
+
       describe("request handler", function () {
         var requestHandler;
 
