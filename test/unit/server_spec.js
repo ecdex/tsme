@@ -1,4 +1,4 @@
-/*globals describe, it, beforeEach, afterEach, rewireInApp, buildFailureOnCall */
+/*globals describe, it, beforeEach, afterEach, rewireInApp */
 /*jshint expr:true*/
 
 var should = require("should"),                           // jshint ignore:line
@@ -12,7 +12,8 @@ var should = require("should"),                           // jshint ignore:line
 
 describe("top-level server", function () {
   var config,
-      sandbox;
+      sandbox,
+      expressStubContainer = {};
 
   beforeEach(function () {
     sandbox = sinon.sandbox.create();
@@ -87,8 +88,7 @@ describe("top-level server", function () {
   });
 
   describe("initialized server", function () {
-    var expressStubContainer = {},
-        stdoutStub;
+    var stdoutStub;
 
     beforeEach(function () {
       server.__set__("express", helpers.mockExpressFactory(expressStubContainer));
@@ -161,38 +161,6 @@ describe("top-level server", function () {
         var installStub = sandbox.stub(server.__get__("helpers"), "registerHelpers");
         factory();
         installStub.calledOnce.should.be.true;
-      });
-
-      describe("request handler", function () {
-        var requestHandler;
-
-        beforeEach(function () {
-          factory();
-          requestHandler = _.detect(expressStubContainer.appStub.use.args, function (callArgs) {
-                return typeof callArgs[0] === "function";
-              })[0];
-        });
-
-        it("serves content/pages/index.md in content/pages/templates/default.hbs for root", function (done) {
-          var req = {
-                path: "/",
-                params: {},
-                route: {}
-              },
-              res = {
-                locals: {},
-                render: function (templateName, contentHash) {
-                  templateName.should.equal("default");
-                  contentHash.contentFromMarkdown.should.equal(
-                      "<p><strong>Hello</strong>, <em>world</em>.</p>\n"
-                  );
-                  done();
-                }
-              };
-
-          requestHandler(req, res,
-              buildFailureOnCall(done, "Express request handler should have responded but didn't"));
-        });
       });
     }
 

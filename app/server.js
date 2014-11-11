@@ -1,10 +1,7 @@
-require("string.prototype.endswith");
-
 var express = require("express"),
     fs = require("fs"),
     path = require("path"),
     hbs = require("express-hbs"),
-    marked = require("marked"),
 //    sass = require("node-sass"),
     config = require("environmental").config(),
 
@@ -14,51 +11,23 @@ var express = require("express"),
     markdownEncoding,
     contentBasePath;
 
-function pagesPath() {
-  return path.join(contentBasePath, "pages");
-}
-
-function templateForPage() {  // eventual signature is markdownPath in
-  return "default";
-}
-
-function server(req, res, next) {
-  var markdownPath = req.path.replace(/\.[^.]+$/, ""),
-      absolutePath = path.join(pagesPath(), markdownPath+".md");
-
-  if (absolutePath.endsWith("/.md")) {
-    absolutePath = absolutePath.replace("/.md", "/index.md");
-  }
-
-  var markdownContent;
-  try {
-    markdownContent = fs.readFileSync(absolutePath, { encoding: markdownEncoding });
-  } catch (e) {
-    next();
-    return;
-  }
-
-  var htmlContent = marked(markdownContent);
-  res.render(templateForPage(markdownPath), {
-    contentFromMarkdown: htmlContent
-  });
-}
-
-function directoryExistsOrDie(path, message) {
-  if (!fs.existsSync(path)) {
-    output.terminalFailure(1, message);
-  }
-}
-
 function setContentBasePath() {
   contentBasePath = config.content.basepath;
+
+  function directoryExistsOrDie(path, message) {
+    if (!fs.existsSync(path)) {
+      output.terminalFailure(1, message);
+    }
+  }
 
   directoryExistsOrDie(contentBasePath,
       "Cannot find your content directory, '" + contentBasePath + "',\n" +
       " as specified by config.content.basepath from the environment."
   );
-  directoryExistsOrDie(pagesPath(),
-      "Cannot find your directory for page Markdown, '" + pagesPath() + "',\n" +
+
+  var pagesPath = path.join(contentBasePath, "pages");
+  directoryExistsOrDie(pagesPath,
+      "Cannot find your directory for page Markdown, '" + pagesPath + "',\n" +
       " 'pages' under the directory from config.content.basepath."
   );
 
@@ -101,7 +70,7 @@ function setup() {
 
   var oneYear = 31536000000;
   app.use("/assets", express["static"]("public/assets", { maxAge: oneYear }));
-  app.use(server);
+  app.use(require("./request_handler")(markdownEncoding, contentBasePath));
   return app;
 }
 

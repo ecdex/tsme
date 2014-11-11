@@ -36,29 +36,29 @@ helpers = {
     ].join(""));
   },
 
-  load_css: function (options) {
+  load_css: function (nickname, options) {
     if (inProductionLikeEnvironment()) {
       return new hbs.SafeString("<link rel=\"stylesheet\" href=\"" + options.hash.production_path + "\">");
     } else {
       return new hbs.SafeString([
-        "<link rel=\"stylesheet\" id=\"" + options.hash.nickname + "-load\" href=\"" + options.hash.development_path + "\">",
-        "<script type=\"text/javascript\">loadingCss('" + options.hash.nickname + "');</script>"
+        "<link rel=\"stylesheet\" id=\"" + nickname + "-load\" href=\"" + options.hash.development_path + "\">",
+        "<script type=\"text/javascript\">loadingCss('" + nickname + "');</script>"
       ].join(""));
     }
   },
 
-  load_js: function (options) {
+  load_js: function (nickname, options) {
     if (inProductionLikeEnvironment()) {
       return new hbs.SafeString("<script src=\"" + options.hash.production_path + "\"></script>");
     } else {
       return new hbs.SafeString([
-        "<script id=\"" + options.hash.nickname + "-load\"></script>",
-        "<script type=\"text/javascript\">loadingJs('" + options.hash.nickname + "', '" + options.hash.development_path + "');</script>"
+        "<script id=\"" + nickname + "-load\"></script>",
+        "<script type=\"text/javascript\">loadingJs('" + nickname + "', '" + options.hash.development_path + "');</script>"
       ].join(""));
     }
   },
 
-  perform_resouce_loading_errorcheck: function () {
+  perform_resource_loading_errorcheck: function () {
     if (inProductionLikeEnvironment()) {
       return "";
     }
@@ -75,6 +75,32 @@ helpers = {
       "  };",
       "</script>"
     ].join(""));
+  },
+
+  add_css_link: function (nickname, stylesheetPath) {
+    var jsToAddLinkToHead = [
+      "var el = document.createElement('link');",
+      "el.type = 'text/css';",
+      "el.rel = 'stylesheet';",
+      "el.id = '" + nickname + "-load';",
+      "el.href = '" + stylesheetPath + "';",
+      "document.getElementsByTagName('head')[0].appendChild(el);"
+    ].join("");
+
+    if (inProductionLikeEnvironment()) {
+      return new hbs.SafeString([
+        "<script type=\"text/javascript\">",
+        jsToAddLinkToHead,
+        "</script>"
+      ].join(""));
+    } else {
+      return new hbs.SafeString([
+        "<script type=\"text/javascript\">",
+        jsToAddLinkToHead,
+        "loadingCss('" + nickname + "');",
+        "</script>"
+      ].join(""));
+    }
   },
 
   registerHelpers: function () {

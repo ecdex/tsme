@@ -33,6 +33,10 @@ function loadInstallTasks(grunt) {
             dest: "public/assets/css/bootstrap.min.css"
           },
           {
+            src: "bower_components/bootstrap/dist/css/bootstrap-theme.min.css",
+            dest: "public/assets/css/bootstrap-theme.min.css"
+          },
+          {
             src: "bower_components/bootstrap/dist/js/bootstrap.min.js",
             dest: "public/assets/js/bootstrap.min.js"
           },
