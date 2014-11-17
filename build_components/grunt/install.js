@@ -47,6 +47,12 @@ function loadInstallTasks(grunt) {
           {
             src: "bower_components/jquery/dist/jquery.min.map",
             dest: "public/assets/js/jquery.min.map"
+          },
+          {
+            expand: true,
+            cwd: "content/assets",
+            src: "**",
+            dest: "public/assets"
           }
         ]
       }

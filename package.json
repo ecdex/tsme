@@ -10,17 +10,16 @@
     "url" : "https://github.com/ecdex/tsme.git"
   },
   "bugs": { "url": "https://github.com/ecdex/tsme/issues" },
-  "licenses": [ {
-      "type": "AGPLv3",
-      "url": "http://www.gnu.org/licenses/agpl-3.0.html"
-    } ],
+  "licenses": "AGPL-3.0",
   "main": "server",
   "scripts": {
+    "install": "grunt install",
     "start": "/usr/bin/env bash -c 'source envs/development.sh ; node server'",
     "test":  "grunt validate"
   },
   "engines": {
-    "node": "~0.10.0"
+    "node": "~0.10.0",
+    "npm": "^2.0.0"
   },
   "engineStrict": true,
   "dependencies": {
