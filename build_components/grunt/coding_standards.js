@@ -22,6 +22,7 @@ function loadCodingStandardsTasks() {
         src: [
           "test/*.js",
           "test/unit/**/*.js",
+          "test/integration/**/*.js",
           "test/fixtures/middleware_test_server/*.js"
         ]
       }

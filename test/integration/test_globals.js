@@ -1,11 +1,14 @@
+/*globals before, after */
+/*jshint expr:true*/
 
-var webdriver = require('selenium-webdriver'),
+var webdriver = require("selenium-webdriver"),
     should = require("should"),                           // jshint ignore:line
     _ = require("lodash"),
     config = require("environmental").config(),
-    helpers = require('./test_helpers');
+    helpers = require("./test_helpers");
 
-driver = 'is global';
+/*globals driver: true */
+driver = "is global";
 
 before(function () {
       // use either one
@@ -15,7 +18,7 @@ before(function () {
 
 after(function (done) {
   if (config.integration.browsername !== "Firefox") {  // FF logs contain non-errors
-    driver.manage().logs().get(webdriver.logging.Type.BROWSER).then(function(logEntries) {
+    driver.manage().logs().get(webdriver.logging.Type.BROWSER).then(function (logEntries) {
       var filteredEntries = logEntries;
       if (config.integration.browsername === "PhantomJs") {
         // phantom doesn't trigger onload events on completion of fetch for LINK elements,
@@ -27,7 +30,7 @@ after(function (done) {
 
       // produce a good error message if the assert is about to fail
       if (filteredEntries.length !== 0) {
-        _.each(filteredEntries, function(entry) {
+        _.each(filteredEntries, function (entry) {
           console.log(entry.message);
         });
       }
