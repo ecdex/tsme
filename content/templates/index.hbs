@@ -1,5 +1,9 @@
 {{> common_page_header}}
-{{add_css_link "cover-css" "assets/css/cover.css"}}
+  {{load_css "cover-css"
+      production_path="assets/css/cover.css"
+      development_path="assets/css/cover.css"
+  }}
+{{> common_page_header_body_boundary}}
 
 <div class="site-wrapper">
   <div class="site-wrapper-inner">

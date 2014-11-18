@@ -77,32 +77,6 @@ helpers = {
     ].join(""));
   },
 
-  add_css_link: function (nickname, stylesheetPath) {
-    var jsToAddLinkToHead = [
-      "var el = document.createElement('link');",
-      "el.type = 'text/css';",
-      "el.rel = 'stylesheet';",
-      "el.id = '" + nickname + "-load';",
-      "el.href = '" + stylesheetPath + "';",
-      "document.getElementsByTagName('head')[0].appendChild(el);"
-    ].join("");
-
-    if (inProductionLikeEnvironment()) {
-      return new hbs.SafeString([
-        "<script type=\"text/javascript\">",
-        jsToAddLinkToHead,
-        "</script>"
-      ].join(""));
-    } else {
-      return new hbs.SafeString([
-        "<script type=\"text/javascript\">",
-        jsToAddLinkToHead,
-        "loadingCss('" + nickname + "');",
-        "</script>"
-      ].join(""));
-    }
-  },
-
   registerHelpers: function () {
     var keys = _.difference(_.keys(helpers), ["registerHelpers"]);
     _.each(keys, function (key) {
