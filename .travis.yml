@@ -5,6 +5,12 @@ cache:
   directories:
     - node_modules
     - bower_components
+env:
+  global:
+    - secure: aW8xnJntiw7AZE1mHUbLYOGnYQ8yg8f9wYrhIIDQEWAnEh1VxDYCsUPiuRK0tmUy0IC9NZraGb1Tzi2+JTUbeI85aARN3FsIhbPqcGvQKJTj5Bhvp3dWhlZJmiveB/DfQEU/v6IZ2ghX/APjnmeOKmlLZtDDNtGeKS/MuBMtrV4=
+    - secure: UO0syc2TUIZ/y7DpmBOQRsXXgnwB7fqIllCx+dLgkzzsP1ElQr3cCS1WL9d6SxJHG2qkxp1rI6HWMrvHvfhIC7P5xw9ZznjvsDs8azc8eHSbBUkhdaNI2C0v04jlaxylE74LWTcKfcwHh2P2D5B6czVuD3QPriYx2x9Ax4MqDjc=
+addons:
+  sauce_connect: true
 before_install:
   - npm install -g npm@2
   - npm --version
@@ -12,3 +18,4 @@ before_install:
 before_script:
   - phantomjs --version
   - grunt install
+script: grunt full-test

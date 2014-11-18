@@ -7,4 +7,4 @@ export DEPLOY_ENV="$(basename "${BASH_SOURCE[0]}" .sh)"
 export NODE_ENV="test"
 #export DEBUG=*:*
 
-export TSME_INTEGRATION_BROWSERNAME="PhantomJs"
+export TSME_INTEGRATION_BROWSERNAME="phantomjs"

@@ -11,16 +11,22 @@ var webdriver = require("selenium-webdriver"),
 driver = "is global";
 
 before(function () {
-      // use either one
-  driver = helpers.getWebdriver(config.integration.browsername);
+  //  -- for debug
   //driver = helpers.getChromeWithVerboseLogging();
+  //return;
+
+  if (process.env.TSME_INTEGRATION_CLIENTS === "sauce") {
+    driver = helpers.getSauce();     // browser config from environment
+  } else {   // "local"
+    driver = helpers.getWebdriver(config.integration.browsername);
+  }
 });
 
 after(function (done) {
   if (config.integration.browsername !== "Firefox") {  // FF logs contain non-errors
     driver.manage().logs().get(webdriver.logging.Type.BROWSER).then(function (logEntries) {
       var filteredEntries = logEntries;
-      if (config.integration.browsername === "PhantomJs") {
+      if (config.integration.browsername === "phantomjs") {
         // phantom doesn't trigger onload events on completion of fetch for LINK elements,
         // so we incorrectly report failure on CSS file loads
         filteredEntries = _.reject(logEntries, function (entry) {
