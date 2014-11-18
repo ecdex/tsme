@@ -13,7 +13,6 @@
   "licenses": "AGPL-3.0",
   "main": "server",
   "scripts": {
-    "install": "grunt install",
     "start": "/usr/bin/env bash -c 'source envs/development.sh ; node server'",
     "test":  "grunt validate"
   },
