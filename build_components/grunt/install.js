@@ -1,5 +1,15 @@
 
 function loadInstallTasks(grunt) {
+  grunt.registerTask("install",
+      "copy stuff between files checked into source control and where they need to be to run tests",
+      [
+        "shell:bower",
+        "get-default-environment-configs",
+        "npm-install-test-server",
+        "refresh-test-servers-copy-of-tsme",
+        "copy:assets"
+      ]);
+
   grunt.registerTask("get-default-environment-configs",
       "environment config info (read by the environmental NPM) needs to be in /envs to run, but canonical examples are kept in /test/fixtures/build_envs",
       ["shell:envs"]
@@ -14,15 +24,6 @@ function loadInstallTasks(grunt) {
       "shell:rsync-tsme-to-fixtures"
   );
 
-  grunt.registerTask("install",
-      "copy stuff between files checked into source control and where they need to be to run tests",
-      [
-        "shell:bower",
-        "get-default-environment-configs",
-        "npm-install-test-server",
-        "refresh-test-servers-copy-of-tsme",
-        "copy:assets"
-      ]);
 
   return {
     copy: {
