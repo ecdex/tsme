@@ -8,7 +8,7 @@ Trivial Server for Markdown via Express
 [![Dependency Status](https://david-dm.org/ecdex/tsme.png?theme=shields.io)](https://david-dm.org/ecdex/tsme)
 [![Development Dependency Status](https://david-dm.org/ecdex/tsme/dev-status.png?theme=shields.io)](https://david-dm.org/ecdex/tsme#info=devDependencies)
 
-A simple Express application that serves static Markdown content
+A simple Express application that serves static markdown content
 transformed to HTML through [marked](https://github.com/chjj/marked)
 and [Handlebars](http://handlebarsjs.com/).  Intended to support
 light production use, it can be run stand-alone but is expected
@@ -16,20 +16,21 @@ mostly to be used as middleware in a larger Express-based web
 site/application.
 
 TSME can be installed either directly from the
-[GitHub repository](https://github.com/ecdex/tsme).  However you install,
+[GitHub repository](https://github.com/ecdex/tsme) or as an
+NPM module.  However you install,
 there are several directories in the TSME repository intended as
 examples of ways to structure the content that TSME serves, and not
 actually expected to be used outside of TSME development and test:
 
 * You'll want your own `content` directory (which can be named
 whatever you want).  This will contain content for individual pages
-in Markdown (in a directory hierarchy that matches the URL schem you
+in markdown (in a directory hierarchy that matches the URL scheme you
 want for your site), Handlebars templates used to serve the HTML
-generated from your Markdown, and any custom assets that must be
+generated from your markdown, and any custom assets that must be
 served along with your pages.
 * There will have to be a `public` directory if you run TSME stand-alone
 or in an Express configuration that doesn't serve static assets using
-another component, then TSME will try to serve non-Markdown HTTP
+another component.  TSME will try to serve non-markdown HTTP
 requests by looking in the `public` directory.  The name and location
 of this directory is not currently configurable (see our To-Do list
 below).  But, in a production environment, static assets should be
@@ -57,7 +58,7 @@ anyone who has built Express web applications in the past.
 * In the repository, `npm install` to load dependencies
 * `npm start` to start the example server locally
 * navigating a browser to `http://localhost:3000/` will give you
-the Markdown from `content/pages/index.md`
+the markdown from `content/pages/index.md`
 
 ## Installing as an NPM
 
@@ -82,18 +83,20 @@ its conventions.
 * TSME relies on the directory structure under `content/pages`
 matching the URL structure of (the portion of) your site served
 by TSME.
-* TSME assumes that if a Markdown file is supposed to be
-served using a special Handlebars template, the template will
-be located in a directory and have a name that matches the
-markdown file's, but located under `content/templates`.  Markdown
-files from `content/pages` that do not have matching Handlebars
+* TSME will use a non-default Handlebars template for a markdown
+_if_
+    * there is a template whose base name matches the name of
+the markdown file, and
+    * it is located in a directory under `content/templates` that
+matches the path to the markdown file under `content/pages`.
+* Files from `content/pages` that do not have matching Handlebars
 templates are served using `content/templates/default.hbs`.
 
 ## To-Do
 
 There are some configuration improvements that
 are obvious, but not immediately necessary for the use of
-TSME that is driving it's development.  Pull requests are
+TSME that is driving its development.  Pull requests are
 always welcome, but particularly for these:
 
 * Make the location of the `public` directory configurable.
