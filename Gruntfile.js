@@ -24,6 +24,9 @@ function configureGrunt(grunt) {
         "install",                         // install
         "validate"
       ]);
+  grunt.registerTask("full-test",
+      "run 'test' plus integration tests on all configured clients on Sauce Labs",
+      ["test", "integrate-sauce"]);
   grunt.registerTask("default", "run 'test' task by default", ["test"]);
 
   grunt.initConfig(configuration);

@@ -23,3 +23,5 @@
 export NODE_APP_PREFIX="TSME"
 export TSME_SERVER_PORT="3000"
 export TSME_CONTENT_BASEPATH="content"
+
+export multi="spec=-"

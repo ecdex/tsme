@@ -8,6 +8,8 @@ Trivial Server for Markdown via Express
 [![Dependency Status](https://david-dm.org/ecdex/tsme.png?theme=shields.io)](https://david-dm.org/ecdex/tsme)
 [![Development Dependency Status](https://david-dm.org/ecdex/tsme/dev-status.png?theme=shields.io)](https://david-dm.org/ecdex/tsme#info=devDependencies)
 
+[![Selenium Test Status](https://saucelabs.com/browser-matrix/tsme.svg)](https://saucelabs.com/u/tsme)
+
 A simple Express application that serves static markdown content
 transformed to HTML through [marked](https://github.com/chjj/marked)
 and [Handlebars](http://handlebarsjs.com/).  Intended to support

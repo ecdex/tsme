@@ -1,7 +1,7 @@
 /*jshint expr:true*/
 
-var should = require("should"),                           // jshint ignore:line
-    sinon = require("sinon"),
+require("should");
+var sinon = require("sinon"),
 
     helpers = {
       shouldBeAnInstanceOfExpress: function (express) {

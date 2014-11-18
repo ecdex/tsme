@@ -1,8 +1,8 @@
 /*globals describe, it, beforeEach, afterEach, rewireInApp */
 /*jshint expr:true*/
 
-var should = require("should"),                           // jshint ignore:line
-    sinon = require("sinon"),
+require("should");
+var sinon = require("sinon"),
     environmental = require("environmental"),
     _ = require("lodash"),
     helpers = require("./test_helpers"),
