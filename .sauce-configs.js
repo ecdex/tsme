@@ -8,17 +8,17 @@
 //  match available Sauce Labs platforms, see https://saucelabs.com/platforms
 
 module.exports = {
-  chrome: [
-    //{ platform: "OS X 10.10", version: "37" },
-    //{ platform: "OS X 10.9", version: "" },
-    //{ platform: "OS X 10.8", version: "27" },
-    //{ platform: "Windows 8.1", version: "35" },
-    //{ platform: "Linux", version: "35" }
-  ],
   firefox: [
-    //{ platform: "OS X 10.10", version: "33" },
-    //{ platform: "Windows 8.1", version: "33" },
-    //{ platform: "Linux", version: "33" }
+    { platform: "OS X 10.10", version: "33" },
+    { platform: "Windows 8.1", version: "33" },
+    { platform: "Linux", version: "33" }
+  ],
+  chrome: [
+    { platform: "OS X 10.10", version: "37" },
+    { platform: "OS X 10.9", version: "" },
+    { platform: "OS X 10.8", version: "27" },
+    { platform: "Windows 8.1", version: "35" },
+    { platform: "Linux", version: "35" }
   ],
   safari: [
     //{ platform: "OS X 10.10", version: "8" }     // need to debug CSS-didn't-load detection in a real Safari before re-enabling
@@ -29,14 +29,14 @@ module.exports = {
     { platform: "Windows 7", version: "9" },
     { platform: "Windows 7", version: "8" }
   ],
-  iPad: [
-    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
+  opera: [
+    { platform: "Windows 7", version: "12" }
   ],
   iPhone: [
     { platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
   ],
-  opera: [
-    { platform: "Windows 7", version: "12" }
+  iPad: [
+    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
   ],
   android: [
     { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
