@@ -9,9 +9,9 @@
 
 module.exports = {
   firefox: [
+    { platform: "Linux", version: "33" },          // WTH FF?  Why isn't Linux the easy one?
     { platform: "OS X 10.10", version: "33" },
-    { platform: "Windows 8.1", version: "33" },
-    { platform: "Linux", version: "33" }
+    { platform: "Windows 8.1", version: "33" }
   ],
   chrome: [
     { platform: "OS X 10.10", version: "37" },
