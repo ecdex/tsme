@@ -14,7 +14,7 @@ driver = "is global";
 function failTestOnError(err) {
   console.log("  -------->  FAILED");
   console.log(err.toString());
-  console.log(err.stack());
+  console.log(err.stack);
   err.message.should.equal("");   // force test failure with mismatch printing message
 }
 

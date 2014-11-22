@@ -51,8 +51,9 @@ var os = require("os"),
             sauceParams = {
               username: process.env.SAUCE_USERNAME,
               accessKey: process.env.SAUCE_ACCESS_KEY
-            };
-        process.env.TSME_INTEGRATION_CLIENT_BROWSER = config.browserName;
+            },
+            browserName = config.browserName;
+        process.env.TSME_INTEGRATION_CLIENT_BROWSER = browserName;
 
         if (process.env.TRAVIS_JOB_NUMBER) {
           sauceParams["tunnel-identifier"] = process.env.TRAVIS_JOB_NUMBER;
@@ -72,7 +73,7 @@ var os = require("os"),
               sessionId = process.env.SAUCE_SESSION_ID = session.getId(),
               jobInfo = {
                 name: "tsme sauce integration",
-                tags: [],
+                tags: [browserName],
                 "custom-data": {}
               };
 

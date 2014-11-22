@@ -16,9 +16,8 @@ module.exports = {
     //{ platform: "Linux", version: "35" }
   ],
   firefox: [
-    { platform: "OS X 10.10", version: "33" },
-    { platform: "Windows 8.1", version: "33" }
-    ,
+    //{ platform: "OS X 10.10", version: "33" },
+    //{ platform: "Windows 8.1", version: "33" },
     //{ platform: "Linux", version: "33" }
   ],
   safari: [
