@@ -25,10 +25,14 @@ before(function () {
 after(function (done) {
   if (config.integration.browsername !== "Firefox") {  // FF logs contain non-errors
     driver.manage().logs().get(webdriver.logging.Type.BROWSER).then(function (logEntries) {
-      var filteredEntries = logEntries;
-      if (config.integration.browsername === "phantomjs") {
-        // phantom doesn't trigger onload events on completion of fetch for LINK elements,
-        // so we incorrectly report failure on CSS file loads
+      var spuriousCssLoadFailures = [
+            // these browsers don't trigger onload events on completion of fetch
+            // for LINK elements, so we incorrectly report failure on CSS file loads
+            "phantomjs", "android"
+          ],
+          filteredEntries = logEntries;
+
+      if (_.indexOf(spuriousCssLoadFailures, config.integration.browsername) !== -1) {
         filteredEntries = _.reject(logEntries, function (entry) {
           return /Error: didn't load asset nicknamed '.*-css'/.test(entry.message);
         });

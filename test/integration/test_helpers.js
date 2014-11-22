@@ -95,7 +95,7 @@ var os = require("os"),
             "TRAVIS_JOB_NUMBER", "TRAVIS_NODE_VERSION"
           ], function (envVar) {
             if (process.env[envVar]) {
-              var key = envVar.toUpperCase().replace(/_/g, "-");
+              var key = envVar.toLowerCase().replace(/_/g, "-");
               jobInfo["custom-data"][key] = process.env[envVar];
             }
           });
