@@ -39,7 +39,8 @@ after(function (done) {
   var browserName = process.env.TSME_INTEGRATION_CLIENT_BROWSER ||
       config.integration.browsername;
 
-  if (browserName !== "firefox") {  // FF logs contain non-errors
+  if (browserName !== "firefox" &&            // FF logs contain non-errors
+      browserName !== "internet explorer") {  // no browser logs from webdriver on IE
     driver.manage().logs().
         get(webdriver.logging.Type.BROWSER).
         then(function (logEntries) {
