@@ -12,6 +12,8 @@ driver = "is global";
 
 /*globals failTestOnError: true */
 function failTestOnError(err) {
+  if (err.name === "AssertionError") { throw err; }
+
   console.log("  -------->  FAILED");
   console.log(err.toString());
   console.log(err.stack);
