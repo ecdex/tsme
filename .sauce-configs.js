@@ -13,6 +13,10 @@ module.exports = {
     { platform: "OS X 10.10", version: "33" },
     { platform: "Windows 8.1", version: "33" }
   ],
+  android: [
+    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
+      deviceName: "Google Nexus 7C Emulator" }
+  ],
   chrome: [
     { platform: "OS X 10.10", version: "37" },
     { platform: "OS X 10.9", version: "" },
@@ -33,13 +37,9 @@ module.exports = {
     { platform: "Windows 7", version: "12" }
   ],
   iPhone: [
-    { platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
+    //{ platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
   ],
   iPad: [
-    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
-  ],
-  android: [
-    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
-      deviceName: "Google Nexus 7C Emulator" }
+    //{ platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
   ]
 };
