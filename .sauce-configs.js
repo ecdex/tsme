@@ -12,13 +12,14 @@ module.exports = {
     //{ platform: "OS X 10.10", version: "37" },
     //{ platform: "OS X 10.9", version: "" },
     //{ platform: "OS X 10.8", version: "27" },
-    { platform: "Windows 8.1", version: "35" },
-    { platform: "Linux", version: "35" }
+    //{ platform: "Windows 8.1", version: "35" },
+    //{ platform: "Linux", version: "35" }
   ],
   firefox: [
     { platform: "OS X 10.10", version: "33" },
-    { platform: "Windows 8.1", version: "33" },
-    { platform: "Linux", version: "33" }
+    { platform: "Windows 8.1", version: "33" }
+    ,
+    //{ platform: "Linux", version: "33" }
   ],
   safari: [
     { platform: "OS X 10.10", version: "8" }
