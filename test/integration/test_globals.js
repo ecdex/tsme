@@ -10,15 +10,15 @@ var webdriver = require("selenium-webdriver"),
 /*globals driver: true */
 driver = "is global";
 
-/*globals failTestOnError: true */
-function failTestOnError(err) {
-  if (err.name === "AssertionError") { throw err; }
-
-  console.log("  -------->  FAILED");
-  console.log(err.toString());
-  console.log(err.stack);
-  err.message.should.equal("");   // force test failure with mismatch printing message
-}
+//globals failTestOnError: true */
+//function failTestOnError(err) {
+//  if (err.name === "AssertionError") { throw err; }
+//
+//  console.log("  -------->  FAILED");
+//  console.log(err.toString());
+//  console.log(err.stack);
+//  err.message.should.equal("");   // force test failure with mismatch printing message
+//}
 
 before(function () {
   var browserName = process.env.TSME_INTEGRATION_CLIENT_BROWSER ||
@@ -63,12 +63,12 @@ after(function (done) {
             });
           }
           filteredEntries.length.should.equal(0);
-        }).
-        then(null, function (err) { failTestOnError(err); });
+        });//.
+        //then(null, function (err) { failTestOnError(err); });
   }
 
   driver.
       quit().
-      then(function () { done(); }).
-      then(null, function (err) { failTestOnError(err); });
+      then(function () { done(); });//.
+      //then(null, function (err) { failTestOnError(err); });
 });

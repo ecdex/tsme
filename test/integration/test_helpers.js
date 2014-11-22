@@ -1,5 +1,3 @@
-/*globals failTestOnError */
-
 var os = require("os"),
     _ = require("lodash"),
     SauceLabs = require("saucelabs"),
@@ -27,8 +25,8 @@ var os = require("os"),
             findElement(webdriver.By.tagName("BODY")).
             then(function (element) {
               bodyElement = element;
-            }).
-            then(null, function (err) { failTestOnError(err); });
+            });//.
+            //then(null, function (err) { failTestOnError(err); });
         seleniumOperation();
         driver.wait(function () {
           return bodyElement.getAttribute("class").then(
