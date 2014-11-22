@@ -23,7 +23,7 @@ module.exports = {
   safari: [
     //{ platform: "OS X 10.10", version: "8" }     // need to debug CSS-didn't-load detection in a real Safari before re-enabling
   ],
-  "internet exporer": [
+  ie: [
     { platform: "Windows 8.1", version: "11" },
     { platform: "Windows 8", version: "10" },
     { platform: "Windows 7", version: "9" },
