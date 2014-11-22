@@ -18,7 +18,10 @@ before(function () {
   if (process.env.TSME_INTEGRATION_CLIENTS === "sauce") {
     driver = helpers.getSauce();     // browser config from environment
   } else {   // "local"
-    driver = helpers.getWebdriver(config.integration.browsername);
+    driver = helpers.getWebdriver(
+        process.env.TSME_INTEGRATION_CLIENT_BROWSER ||
+        config.integration.browsername
+    );
   }
 });
 
