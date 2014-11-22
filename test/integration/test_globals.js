@@ -23,7 +23,7 @@ before(function () {
 });
 
 after(function (done) {
-  if (config.integration.browsername !== "Firefox") {  // FF logs contain non-errors
+  if (config.integration.browsername !== "firefox") {  // FF logs contain non-errors
     driver.manage().logs().get(webdriver.logging.Type.BROWSER).then(function (logEntries) {
       var spuriousCssLoadFailures = [
             // these browsers don't trigger onload events on completion of fetch
