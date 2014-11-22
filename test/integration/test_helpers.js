@@ -45,7 +45,9 @@ var os = require("os"),
 
       failIfWebdriverBrowserLogContainsErrors: function (browserName) {
         if (browserName !== "firefox" &&            // FF logs contain non-errors
-            browserName !== "internet explorer") {  // no browser logs from webdriver on IE
+            browserName !== "internet explorer" &&  // no browser logs from webdriver on IE
+            browserName !== "iPhone" &&             // or on iOS
+            browserName !== "iPad") {
           driver.manage().logs().
               get(webdriver.logging.Type.BROWSER).
               then(function (logEntries) {

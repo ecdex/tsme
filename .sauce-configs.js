@@ -8,24 +8,20 @@
 //  match available Sauce Labs platforms, see https://saucelabs.com/platforms
 
 module.exports = {
-  android: [
-    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
-      deviceName: "Google Nexus 7C Emulator" }
-  ],
   firefox: [
-    //{ platform: "Linux", version: "33" },        // WTH FF?  Why isn't Linux the easy one?
+    { platform: "Linux", version: "33" },
     { platform: "OS X 10.10", version: "33" },
     { platform: "Windows 8.1", version: "33" }
   ],
   chrome: [
     { platform: "OS X 10.10", version: "37" },
-    { platform: "OS X 10.9", version: "" },
+    { platform: "OS X 10.9", version: "" },      // floating latest version
     { platform: "OS X 10.8", version: "32" },
-    //{ platform: "Linux", version: "35" },        // maybe no Linux browsers are going to work?
+    { platform: "Linux", version: "35" },
     { platform: "Windows 8.1", version: "35" }
   ],
   safari: [
-    //{ platform: "OS X 10.10", version: "8" }     // need to debug CSS-didn't-load detection in a real Safari before re-enabling
+    { platform: "OS X 10.10", version: "8" }
   ],
   "internet explorer": [
     { platform: "Windows 8.1", version: "11" },
@@ -36,10 +32,14 @@ module.exports = {
   opera: [
     { platform: "Windows 7", version: "12" }
   ],
+  android: [
+    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
+      deviceName: "Google Nexus 7C Emulator" }
+  ],
   iPhone: [
-    //{ platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
+    { platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
   ],
   iPad: [
-    //{ platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
+    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "landscape" }
   ]
 };
