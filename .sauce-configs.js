@@ -8,10 +8,6 @@
 //  match available Sauce Labs platforms, see https://saucelabs.com/platforms
 
 module.exports = {
-  android: [
-    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
-      deviceName: "Google Nexus 7C Emulator" }
-  ],
   chrome: [
     { platform: "OS X 10.10", version: "37" },
     { platform: "OS X 10.9", version: "" },
@@ -23,6 +19,9 @@ module.exports = {
     { platform: "OS X 10.10", version: "33" },
     { platform: "Windows 8.1", version: "33" },
     { platform: "Linux", version: "33" }
+  ],
+  safari: [
+    { platform: "OS X 10.10", version: "8" }
   ],
   ie: [
     { platform: "Windows 8.1", version: "11" },
@@ -39,7 +38,8 @@ module.exports = {
   opera: [
     { platform: "Windows 7", version: "12" }
   ],
-  safari: [
-    { platform: "OS X 10.10", version: "8" }
+  android: [
+    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
+      deviceName: "Google Nexus 7C Emulator" }
   ]
 };
