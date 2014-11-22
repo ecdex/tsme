@@ -3,7 +3,7 @@
 
 var config = require("environmental").config();
 
-describe("local test server", function () {
+describe("server", function () {
   it("responds to GET of root", function (done) {
     var rootPath = config.integration.root;
 

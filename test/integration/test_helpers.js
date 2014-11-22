@@ -1,3 +1,5 @@
+/*globals driver */
+
 var os = require("os"),
     _ = require("lodash"),
     SauceLabs = require("saucelabs"),
@@ -39,6 +41,40 @@ var os = require("os"),
                 return true;
               });
         });
+      },
+
+      failIfWebdriverBrowserLogContainsErrors: function (browserName) {
+        if (browserName !== "firefox" &&            // FF logs contain non-errors
+            browserName !== "internet explorer") {  // no browser logs from webdriver on IE
+          driver.manage().logs().
+              get(webdriver.logging.Type.BROWSER).
+              then(function (logEntries) {
+                var spuriousCssLoadFailures = [
+                      // these browsers don't trigger onload events on completion of fetch
+                      // for LINK elements, so we incorrectly report failure on CSS file loads
+                      "phantomjs", "android"
+                    ],
+                    filteredEntries = logEntries;
+
+                if (_.indexOf(spuriousCssLoadFailures, browserName) !== -1) {
+                  filteredEntries = _.reject(logEntries, function (entry) {
+                    return /Error: didn't load asset nicknamed '.*-css'/.test(entry.message);
+                  });
+                }
+                filteredEntries = _.select(filteredEntries, function (entry) {
+                  return !!entry.message;
+                });
+
+                // produce a good error message if the assert is about to fail
+                if (filteredEntries.length !== 0) {
+                  _.each(filteredEntries, function (entry) {
+                    console.log(entry.message);
+                  });
+                }
+                filteredEntries.length.should.equal(0);
+              });//.
+          //then(null, function (err) { failTestOnError(err); });
+        }
       },
 
       // the Sauce Labs helper is comparatively huge, so it's last

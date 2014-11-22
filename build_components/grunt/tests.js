@@ -57,7 +57,10 @@ function loadInstallTasks(grunt) {
       "integrate-sauce",
       "run integration tests on middleware config via remote browsers at Sauce Labs",
       function () {
-        var sauceConfigs = require("../../.sauce-configs.js");
+        var configString,
+            sauceConfigs = require("../../.sauce-configs.js"),
+            focusString = process.env.INTEGRATION_FOCUS,
+            focusRe = focusString ? new RegExp(focusString) : null;
 
         grunt.task.run(
             "express:test-middleware",
@@ -68,11 +71,15 @@ function loadInstallTasks(grunt) {
         _.each(_.keys(sauceConfigs), function (browserName) {
           _.each(sauceConfigs[browserName], function (configHash) {
             configHash.browserName = browserName;
-            grunt.task.run(
-                "set-sauce-config:" +
-                JSON.stringify(configHash).replace(/:/g, "\\x3A"),
-                "mochacli:integration"
-            );
+            configString = JSON.stringify(configHash);
+
+            if (!focusRe || focusRe.test(configString)) {
+              grunt.task.run(
+                  "set-sauce-config:" +
+                  configString.replace(/:/g, "\\x3A"),
+                  "mochacli:integration"
+              );
+            }
           });
         });
 

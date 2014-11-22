@@ -8,6 +8,10 @@
 //  match available Sauce Labs platforms, see https://saucelabs.com/platforms
 
 module.exports = {
+  android: [
+    { platform: "Linux", version: "4.3", deviceOrientation: "portrait",
+      deviceName: "Google Nexus 7C Emulator" }
+  ],
   firefox: [
     //{ platform: "Linux", version: "33" },        // WTH FF?  Why isn't Linux the easy one?
     { platform: "OS X 10.10", version: "33" },
@@ -37,9 +41,5 @@ module.exports = {
   ],
   iPad: [
     //{ platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
-  ],
-  android: [
-    //{ platform: "Linux", version: "4.3", deviceOrientation: "portrait",
-    //  deviceName: "Google Nexus 7C Emulator" }
   ]
 };
