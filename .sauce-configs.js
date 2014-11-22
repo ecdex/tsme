@@ -9,14 +9,14 @@
 
 module.exports = {
   firefox: [
-    //{ platform: "Linux", version: "33" },          // WTH FF?  Why isn't Linux the easy one?
+    //{ platform: "Linux", version: "33" },        // WTH FF?  Why isn't Linux the easy one?
     { platform: "OS X 10.10", version: "33" },
     { platform: "Windows 8.1", version: "33" }
   ],
   chrome: [
     { platform: "OS X 10.10", version: "37" },
     { platform: "OS X 10.9", version: "" },
-    { platform: "OS X 10.8", version: "27" },
+    //{ platform: "OS X 10.8", version: "27" },    // no browser logs in this version of Chrome?  https://saucelabs.com/tests/1b688ce583cb452196da517973e4cf8f
     { platform: "Windows 8.1", version: "35" },
     { platform: "Linux", version: "35" }
   ],
