@@ -40,6 +40,6 @@ module.exports = {
     { platform: "OS X 10.9", version: "8.1", deviceOrientation: "portrait" }
   ],
   iPad: [
-    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "landscape" }
+    { platform: "OS X 10.9", version: "8.0", deviceOrientation: "portrait" }
   ]
 };
