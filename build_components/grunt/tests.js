@@ -119,7 +119,7 @@ function loadInstallTasks(grunt) {
       local: { INTEGRATION_CLIENTS_LOCATION: "local" },
       sauce: {
         INTEGRATION_CLIENTS_LOCATION: "sauce",
-        multi: "spec=- ../../build_components/mocha/sauce_notifying_reporter=-"
+        multi: "spec=- mocha-sauce-notifying-reporter=-"
       }
     },
 
