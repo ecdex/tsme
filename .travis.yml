@@ -7,8 +7,8 @@ cache:
     - bower_components
 env:
   global:
-    - secure: aW8xnJntiw7AZE1mHUbLYOGnYQ8yg8f9wYrhIIDQEWAnEh1VxDYCsUPiuRK0tmUy0IC9NZraGb1Tzi2+JTUbeI85aARN3FsIhbPqcGvQKJTj5Bhvp3dWhlZJmiveB/DfQEU/v6IZ2ghX/APjnmeOKmlLZtDDNtGeKS/MuBMtrV4=
-    - secure: UO0syc2TUIZ/y7DpmBOQRsXXgnwB7fqIllCx+dLgkzzsP1ElQr3cCS1WL9d6SxJHG2qkxp1rI6HWMrvHvfhIC7P5xw9ZznjvsDs8azc8eHSbBUkhdaNI2C0v04jlaxylE74LWTcKfcwHh2P2D5B6czVuD3QPriYx2x9Ax4MqDjc=
+    - secure: V1avJLT7GNb/b/0KkbCuZis1LiXYZBwhj91ywHfVhkje+dLHnDdG683TA/mmf1x5kWcxkjmfig98Wv+nCwThUv2x541IZQdKZKqc7XA39FkR0rbcyUzfUrEpxMjsISIYpGN8ZwDRGP0D1GZrnVklPysmEU8cPd9ZQvwXB8nGWbA=
+    - secure: CasJs2kiY22LAZMika5GdmgdLlrz/QncLWWqplcZX5uGE6kTOeBfWJ26O+MBhHO8jxi+dTBkwzx/7aJrx0mKEsZMmeAAiiURTOsiG66OFjWNXYmpT1Kbao33l14IZJx8x3zzEEDqvLGJgYhVDRSiAwCYVQugvzTPR86mgip98pM=
 addons:
   sauce_connect: true
 before_install:
