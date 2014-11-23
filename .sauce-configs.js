@@ -21,7 +21,7 @@ module.exports = {
     { platform: "Windows 8.1", version: "35" }
   ],
   safari: [
-    //{ platform: "OS X 10.10", version: "8" }     // safari was working for a while, but now CSS load check failing again, https://saucelabs.com/tests/fbb58a48158444e2a47890116ad486ea
+    { platform: "OS X 10.10", version: "8" }     // safari was working for a while, but now CSS load check failing again, https://saucelabs.com/tests/fbb58a48158444e2a47890116ad486ea
   ],
   "internet explorer": [
     { platform: "Windows 8.1", version: "11" },

@@ -1,4 +1,4 @@
-/*globals driver */
+/*globals driver, failTestOnError */
 
 var os = require("os"),
     fs = require("fs"),
@@ -35,8 +35,8 @@ var os = require("os"),
             findElement(webdriver.By.tagName("BODY")).
             then(function (element) {
               bodyElement = element;
-            });//.
-            //then(null, function (err) { failTestOnError(err); });
+            }).
+            then(null, function (err) { failTestOnError(err); });
         seleniumOperation();
         driver.wait(function () {
           return bodyElement.getAttribute("class").then(
@@ -82,8 +82,8 @@ var os = require("os"),
                   });
                 }
                 filteredEntries.length.should.equal(0);
-              });//.
-          //then(null, function (err) { failTestOnError(err); });
+              }).
+          then(null, function (err) { failTestOnError(err); });
         }
       },
 

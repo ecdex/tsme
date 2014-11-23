@@ -1,4 +1,4 @@
-/*globals driver, describe, it */
+/*globals driver, failTestOnError, describe, it */
 /*jshint expr:true*/
 
 var config = require("environmental").config();
@@ -14,10 +14,10 @@ describe("server", function () {
               getPageSource().
               then(function (content) {
                 return content.indexOf("world") > -1;
-              });//.
-              //then(null, function (err) { failTestOnError(err); });
+              }).
+              then(null, function (err) { failTestOnError(err, done); });
         }, 5000).
-        then(function () { done(); });//.
-        //then(null, function (err) { failTestOnError(err); });
+        then(function () { done(); }).
+        then(null, function (err) { failTestOnError(err, done); });
   });
 });
