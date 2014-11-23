@@ -2,11 +2,10 @@
 /*jshint expr:true*/
 
 require("should");
-var config = require("environmental").config(),
-    helpers = require("./test_helpers");
+var helpers = require("./test_helpers");
 
 /*globals driver: true */
-driver = "is global";
+driver = null;
 
 //globals failTestOnError: true */
 //function failTestOnError(err) {
@@ -19,14 +18,13 @@ driver = "is global";
 //}
 
 before(function () {
-  var browserName = process.env.TSME_INTEGRATION_CLIENT_BROWSER ||
-      config.integration.browsername;
+  var browserName = helpers.getBrowserName();
 
   //  -- for debug
   //driver = helpers.getChromeWithVerboseLogging();
   //return;
 
-  if (process.env.TSME_INTEGRATION_CLIENTS === "sauce") {
+  if (process.env.INTEGRATION_CLIENTS_LOCATION === "sauce") {
     driver = helpers.getSauce();     // browser config from environment
   } else {   // "local"
     driver = helpers.getWebdriver(browserName);
@@ -34,11 +32,13 @@ before(function () {
 });
 
 after(function (done) {
-  var browserName = process.env.TSME_INTEGRATION_CLIENT_BROWSER ||
-      config.integration.browsername;
+  if (!driver) {
+    done();
+    return;
+  }
 
+  var browserName = helpers.getBrowserName();
   helpers.failIfWebdriverBrowserLogContainsErrors(browserName);
-
   driver.
       quit().
       then(function () { done(); });//.

@@ -113,9 +113,9 @@ function loadInstallTasks(grunt) {
     },
 
     env: {
-      local: { TSME_INTEGRATION_CLIENTS: "local" },
+      local: { INTEGRATION_CLIENTS_LOCATION: "local" },
       sauce: {
-        TSME_INTEGRATION_CLIENTS: "sauce",
+        INTEGRATION_CLIENTS_LOCATION: "sauce",
         multi: "spec=- ../../build_components/mocha/sauce_notifying_reporter=-"
       }
     },

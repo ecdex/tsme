@@ -1,8 +1,11 @@
 /*globals driver */
 
 var os = require("os"),
+    fs = require("fs"),
     _ = require("lodash"),
+    shell = require("shelljs"),
     SauceLabs = require("saucelabs"),
+    config = require("environmental").config(),
     webdriver = require("selenium-webdriver"),
     chrome = require("selenium-webdriver/chrome"),
     helpers = {
@@ -19,6 +22,11 @@ var os = require("os"),
         builder.loggingTo(filePath || "chromedriver.log");
         var service = builder.build();
         return new chrome.Driver(null, service);
+      },
+
+      getBrowserName: function () {
+        return process.env.INTEGRATION_CLIENT_BROWSER ||
+        config.integration.browsername;
       },
 
       waitForPageLoadAfter: function (driver, seleniumOperation) {
@@ -81,6 +89,18 @@ var os = require("os"),
 
       // the Sauce Labs helper is comparatively huge, so it's last
       getSauce: function () {
+        // stop run unless it looks like Sauce Connect is running
+        //    /tmp default for local & Travis CI.  Pull request to generalize welcome.
+        var tmpDirListing = fs.readdirSync("/tmp"),
+            scPidFile = _.select(tmpDirListing, function (fileName) {
+              return /^sc_client.*\.pid$/.test((fileName));
+            });
+        if (scPidFile.length < 1) {
+          throw new Error(
+              "Can't find a Sauce Connect PID file (/tmp/sc_client*.pid).  " +
+              "Stopping because we'll fail anyway if sc isn't running");
+        }
+
         var sauce = "http://ondemand.saucelabs.com:80/wd/hub",
             configString = process.env.SAUCE_CONFIG_JSON.replace(/\\x3A/g, ":"),
             config = JSON.parse(configString),
@@ -89,17 +109,20 @@ var os = require("os"),
               accessKey: process.env.SAUCE_ACCESS_KEY
             },
             browserName = config.browserName;
-        process.env.TSME_INTEGRATION_CLIENT_BROWSER = browserName;
+        process.env.INTEGRATION_CLIENT_BROWSER = browserName;
 
+
+        // get webdriver instance connected to Sauce Labs
         if (process.env.TRAVIS_JOB_NUMBER) {
           sauceParams["tunnel-identifier"] = process.env.TRAVIS_JOB_NUMBER;
         }
-
         var driver = new webdriver.Builder().
             usingServer(sauce).
             withCapabilities(_.merge(config, sauceParams)).
             build();
 
+
+        // populate Sauce Labs jobInfo from dev environment or Travis
         driver.getSession().then(function (session) {
           var hostname = os.hostname(),
               saucelabs = new SauceLabs({
@@ -113,18 +136,29 @@ var os = require("os"),
                 "custom-data": {}
               };
 
-
-          // populate jobInfo with things available from dev or Travis
           if (hostname.indexOf("testing-worker") === 0) {
             jobInfo["custom-data"]["travis-hostname"] = hostname;
           } else {
             jobInfo.tags.push(hostname);
           }
 
+          if (process.env.HAS_JOSH_K_SEAL_OF_APPROVAL) {
+            jobInfo.tags.push("travis");
+          }
           if (process.env.TRAVIS_BUILD_NUMBER) {
             jobInfo.build = parseInt(process.env.TRAVIS_BUILD_NUMBER, 10);
           }
 
+          if (!process.env.TRAVIS_BRANCH) {
+            var regex = /^\* (.+)$/,
+                branchList = shell.exec("git branch --no-color", { silent: true }).output,
+                branches = branchList.split("\n"),
+                current = _.first(_.select(branches, function (line) {
+                  return regex.test(line);
+                })),
+                branch = regex.exec(current)[1];
+            jobInfo.tags.push(branch);
+          }
           _.each(["TRAVIS_BRANCH", "TRAVIS_TAG"], function (envVar) {
             if (process.env[envVar]) {
               jobInfo.tags.push(process.env[envVar]);
