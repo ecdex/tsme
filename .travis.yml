@@ -15,7 +15,13 @@ before_install:
   - npm install -g npm@2
   - npm --version
   - npm install -g grunt-cli
+  - grunt --version
 before_script:
+  - echo "Travis environment info ----"
+  - hostname
+  - which phantomjs
   - phantomjs --version
+  - which chromedriver
+  - chromedriver --version
   - grunt install
 script: grunt full-test
