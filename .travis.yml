@@ -21,7 +21,5 @@ before_script:
   - hostname
   - which phantomjs
   - phantomjs --version
-  - which chromedriver
-  - chromedriver --version
   - grunt install
 script: grunt full-test
