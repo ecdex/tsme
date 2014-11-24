@@ -1,1 +1,1 @@
-module.exports = require("./app/server").middleware();
+module.exports = require("./app/server").middleware;

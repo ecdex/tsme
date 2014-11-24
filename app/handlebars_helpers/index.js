@@ -2,7 +2,6 @@ var hbs = require("express-hbs"),
     _ = require("lodash");
 
 
-console.log("handlebars_helpers/index loading");
 function inProductionLikeEnvironment() {
   return process.env.NODE_ENV !== "development" &&
       process.env.NODE_ENV !== "test";

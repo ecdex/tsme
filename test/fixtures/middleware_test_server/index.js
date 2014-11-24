@@ -18,7 +18,7 @@ function serveHomePage(req, res) {
 
 var app = express();
 app.get("/", serveHomePage);
-app.use("/subsite", tsme);
+app.use("/subsite", tsme());
 app.use(function (req, res) {
   res.status(404).send("Sorry, can't find that.");
 });

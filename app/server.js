@@ -2,7 +2,6 @@ var express = require("express"),
     fs = require("fs"),
     path = require("path"),
     hbs = require("express-hbs"),
-//    sass = require("node-sass"),
     config = require("environmental").config(),
 
     output = require("./output_helper"),
@@ -47,17 +46,6 @@ function configureAppForHandlebars(app) {
   }));
 }
 
-//function configureAppForSass(app) {
-//  app.use(sass.middleware({
-//    debug: true,
-//    src: path.join(contentBasePath, "sass"),
-//    dest: path.join(contentBasePath, "assets/css"),
-//    prefix: "/css",
-//    outputStyle: "compressed"
-//  }));
-//  app.use(express.static(path.join(contentBasePath, "assets")));
-//}
-
 
 function setup() {
   markdownEncoding = config.content.encoding || "utf8";
@@ -65,7 +53,6 @@ function setup() {
 
   var app = express();
   configureAppForHandlebars(app);
-//  configureAppForSass(app);
   helpers.registerHelpers();
 
   var oneYear = 31536000000;
@@ -80,7 +67,8 @@ function serverFactory() {
   output.stdout("Express server listening on port " + port);
 }
 
-function middlewareFactory() {
+function middlewareFactory(hostAppConfig) {
+  config = hostAppConfig || config;
   return setup();
 }
 

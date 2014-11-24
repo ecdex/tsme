@@ -171,6 +171,18 @@ describe("top-level server", function () {
         expressStubContainer.appStub.should.equal(app);
       });
 
+      it("accepts an optional config hash", function () {
+        var notAnEncoding = "only-dingbats19";
+        server.middleware({
+          server: { port: 42 },
+          content: {
+            basepath: "content",
+            encoding: notAnEncoding
+          }
+        });
+        server.__get__("markdownEncoding").should.equal(notAnEncoding);
+      });
+
       commonBehaviors(server.middleware);
     });
 
