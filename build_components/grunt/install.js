@@ -64,14 +64,6 @@ function loadInstallTasks(grunt) {
         command: "mkdir -p envs && cp -a test/fixtures/build_envs/* envs/"
       },
 
-      bootstrap: {
-        command:
-            "mkdir -p public/assets/css && " +
-            "cp -a bower_components/dist/css/bootstrap.min.css public/assets/css && " +
-            "mkdir -p public/assets/js && " +
-            "cp -a bower_components/disk/js/bootstrap.min.js public/assets/js"
-      },
-
       "install-test-server": {
         command: "npm install",
         options: {
