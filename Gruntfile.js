@@ -9,7 +9,7 @@ function configureGrunt(grunt) {
   require("matchdep").filterDev(["grunt-*", "!grunt-cli"]).forEach(grunt.loadNpmTasks);
 
   var configuration = {};
-  _.merge(configuration, requireComponent("coding_standards")(grunt));
+  _.merge(configuration, requireComponent("coding_standards")(grunt, ["build_components"]));
   _.merge(configuration, requireComponent("tests")(grunt));
   _.merge(configuration, requireComponent("install")(grunt));
 
