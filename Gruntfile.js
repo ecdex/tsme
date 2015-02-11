@@ -9,24 +9,37 @@ function configureGrunt(grunt) {
   require("matchdep").filterDev(["grunt-*", "!grunt-cli"]).forEach(grunt.loadNpmTasks);
 
   var configuration = {};
-  _.merge(configuration, require("quick-grunt-config-coding-conventions")(grunt, ["build_components"]));
-  _.merge(configuration, requireComponent("tests")(grunt));
   _.merge(configuration, requireComponent("install")(grunt));
+  _.merge(configuration, require("quick-grunt-config-coding-conventions")(grunt, ["build_components"]));
+
+  var mochaSauceSettings = {
+    integrationTargets: ["server", "middleware"],
+    integrationEnvironments: {
+      server:     { INTEGRATION_ROOT: "/" },
+      middleware: { INTEGRATION_ROOT: "/subsite/" }
+    }
+  };
+  _.merge(configuration, require("quick-grunt-config-mocha-sauce")(grunt, mochaSauceSettings));
+  _.merge(configuration, requireComponent("tests")(grunt));   // extra config/tasks to go with ...-mocha-sauce
+
 
   grunt.registerTask("validate", "run all the checks and tests",
       [
-        "jshint", "jscs",                  // coding_standards
-        "test-unit", "test-integration"    // tests
+        "jshint", "jscs",                  // from quick-grunt-config-coding-standards
+        "test-unit", "test-integration"    // from quick-grunt-config-mocha-sauce
       ]);
-  // remember, 'test' is the primary continuous-integration build target
+
   grunt.registerTask("test", "ensure everything's installed and run tests",
       [
-        "install",                         // install
+        "install",                         // from install
         "validate"
       ]);
   grunt.registerTask("full-test",
       "run 'test' plus integration tests on all configured clients on Sauce Labs",
-      ["test", "integrate-sauce"]);
+      [
+        "test",
+        "integrate-sauce"                  // from quick-grunt-config-mocha-sauce
+      ]);
   grunt.registerTask("default", "run 'test' task by default", ["test"]);
 
   grunt.initConfig(configuration);
