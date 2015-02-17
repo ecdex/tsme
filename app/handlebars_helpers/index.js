@@ -10,7 +10,7 @@ function inProductionLikeEnvironment() {
 
 var helpers;
 helpers = {
-  install_resource_loading_errorcheck_functions: function () {
+  installResourceLoadingErrorCheckFunctions: function () {
     if (inProductionLikeEnvironment()) {
       return "";
     }
@@ -35,7 +35,7 @@ helpers = {
     ].join(""));
   },
 
-  load_css: function (nickname, options) {
+  loadCss: function (nickname, options) {
     if (inProductionLikeEnvironment()) {
       return new hbs.SafeString("<link rel=\"stylesheet\" href=\"" + options.hash.production_path + "\">");
     } else {
@@ -46,7 +46,7 @@ helpers = {
     }
   },
 
-  load_js: function (nickname, options) {
+  loadJs: function (nickname, options) {
     if (inProductionLikeEnvironment()) {
       return new hbs.SafeString("<script src=\"" + options.hash.production_path + "\"></script>");
     } else {
@@ -57,7 +57,7 @@ helpers = {
     }
   },
 
-  perform_resource_loading_errorcheck: function () {
+  performResourceLoadingErrorCheck: function () {
     if (inProductionLikeEnvironment()) {
       return "";
     }
