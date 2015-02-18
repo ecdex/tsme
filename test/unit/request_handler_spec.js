@@ -3,12 +3,9 @@
 
 require("should");
 var sinon = require("sinon"),
-    //environmental = require("environmental"),
-    //_ = require("lodash"),
-    //helpers = require("./test_helpers"),
 
-    makeServer = rewireInApp("request_handler"),
-    requestHandler = makeServer("utf8", "content");
+    makeHandler = rewireInApp("request_handler"),
+    requestHandler = makeHandler("utf8", "content");
 
 
 
@@ -21,10 +18,16 @@ var sinon = require("sinon"),
 describe("request handling", function () {
   var sandbox, req, res;
 
+  function requestAndValidate(done) {
+    requestHandler(req, res,
+        buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+  }
+
   beforeEach(function () {
     sandbox = sinon.sandbox.create();
 
     req = {
+      path: "/",
       params: {},
       route: {}
     };
@@ -36,10 +39,6 @@ describe("request handling", function () {
   });
 
   describe("for root it serves content/pages/index.md", function () {
-    beforeEach(function () {
-      req.path = "/";
-    });
-
     it("processes through markdown", function (done) {
       res.render = function (templateName, contentHash) {
         contentHash.contentFromMarkdown.should.equal(
@@ -48,12 +47,11 @@ describe("request handling", function () {
         done();
       };
 
-      requestHandler(req, res,
-          buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+      requestAndValidate();
     });
 
     it("uses content/templates/default.hbs when content/templates/index.hbs doesn't exist", function (done) {
-      var handlerFs = makeServer.__get__("fs");
+      var handlerFs = makeHandler.__get__("fs");
       sandbox.stub(handlerFs, "existsSync").returns(false);
 
       res.render = function (templateName) {
@@ -61,8 +59,7 @@ describe("request handling", function () {
         done();
       };
 
-      requestHandler(req, res,
-          buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+      requestAndValidate();
     });
 
     it("uses content/templates/index.hbs when that exists", function (done) {
@@ -71,8 +68,33 @@ describe("request handling", function () {
         done();
       };
 
-      requestHandler(req, res,
-          buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+      requestAndValidate();
+    });
+  });
+
+  describe("for any page", function () {
+    beforeEach(function () {
+      req.path = "/some-page";
+    });
+
+    it("gets the default template", function (done) {
+      res.render = function (templateName) {
+        templateName.should.equal("default");
+        done();
+      };
+
+      requestAndValidate();
+    });
+
+    it("includes content from the page's markdown file", function (done) {
+      res.render = function (templateName, contentHash) {
+        contentHash.contentFromMarkdown.should.equal(
+            "<p>This page.  Is a page.</p>\n"
+        );
+        done();
+      };
+
+      requestAndValidate();
     });
   });
 });

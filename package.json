@@ -1,6 +1,6 @@
 {
   "name"        : "tsme",
-  "version"     : "0.0.2-pre",
+  "version"     : "1.0.0-pre",
   "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
   "keywords": [ "node", "express", "markdown", "bootstrap" ],
   "author"      : "Glen E. Ivey",
@@ -36,7 +36,7 @@
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-env": "~0.4.2",
     "grunt-environmental": "^0.1.0",
-    "grunt-express-server": "^0.4.19",
+    "grunt-express-server": "git://github.com/ericclemmons/grunt-express-server.git",
     "grunt-jscs": "^1.2.0",
     "grunt-mocha-cli": "^1.10.0",
     "grunt-shell": "^1.1.1",

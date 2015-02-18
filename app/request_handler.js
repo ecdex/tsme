@@ -29,7 +29,9 @@ function makeServer(markdownEncoding, contentBasePath) {
     res.render(
         templateForPage(markdownPath),
         {
-          contentFromMarkdown: marked(markdownContent)
+          contentFromMarkdown: marked(markdownContent),
+          contentPath: fullPath.replace(/\/[^\/]+\.md$/, ""),
+          markdownEncoding: markdownEncoding
         }
     );
   };

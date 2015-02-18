@@ -1,5 +1,8 @@
-var hbs = require("express-hbs"),
-    _ = require("lodash");
+var path = require("path"),
+    fs = require("fs"),
+    hbs = require("express-hbs"),
+    _ = require("lodash"),
+    marked = require("marked");
 
 
 function inProductionLikeEnvironment() {
@@ -74,6 +77,21 @@ helpers = {
       "  };",
       "</script>"
     ].join(""));
+  },
+
+  fromMarkdownFile: function (fileName, options) {
+    var markdownContent,
+        markdownEncoding = options.data.root.markdownEncoding,
+        contentPath = options.data.root.contentPath,
+        fullPath = path.join(contentPath, fileName+".md");
+
+    try {
+      markdownContent = fs.readFileSync(fullPath, { encoding: markdownEncoding });
+    } catch (e) {
+      markdownContent = "";
+    }
+
+    return new hbs.SafeString(marked(markdownContent));
   },
 
   registerHelpers: function () {
