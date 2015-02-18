@@ -1,6 +1,6 @@
 {
   "name"        : "tsme",
-  "version"     : "1.0.0-pre",
+  "version"     : "1.0.0",
   "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
   "keywords": [ "node", "express", "markdown", "bootstrap" ],
   "author"      : "Glen E. Ivey",
@@ -24,7 +24,7 @@
     "bluebird": "^2.9.6",
     "environmental": "^1.2.0",
     "express": "~4.11.2",
-    "express-hbs": "^0.7.11",
+    "express-hbs": "^0.8.0",
     "lodash": "^3.1.0",
     "marked": "^0.3.3",
     "string.prototype.endswith": "^0.2.0"
@@ -46,7 +46,7 @@
     "quick-grunt-config-coding-conventions": "0.0.2",
     "quick-grunt-config-mocha-sauce": "0.0.1",
     "rewire": "^2.1.0",
-    "should": "^4.0.4",
+    "should": "^5.0.0",
     "sinon": "^1.10.3"
   }
 }
