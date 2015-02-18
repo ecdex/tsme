@@ -6,7 +6,7 @@ function loadInstallTasks(grunt) {
         "shell:bower",
         "get-default-environment-configs",
         "npm-install-test-server",
-        "refresh-test-servers-copy-of-tsme",
+        "ensure-logs-directory",
         "copy:assets"
       ]);
 
@@ -19,9 +19,10 @@ function loadInstallTasks(grunt) {
       "the Express server used to test tsme as middleware is organized as a separate node package, so install its dependencies",
       ["shell:install-test-server"]
   );
-  grunt.registerTask("refresh-test-servers-copy-of-tsme",
-      "during development, tsme source files may be modified, so make sure copies used for middleware config are updated",
-      "shell:rsync-tsme-to-fixtures"
+
+  grunt.registerTask("ensure-logs-directory",
+      "the Express server used to test tsme as middleware is organized as a separate node package, so install its dependencies",
+      ["shell:mkdir-logs"]
   );
 
 
@@ -65,7 +66,11 @@ function loadInstallTasks(grunt) {
       },
 
       "install-test-server": {
-        command: "npm install",
+        command: [
+          "npm install",
+          "rm -r node_modules/tsme",
+          "ln -s ../../../.. node_modules/tsme"
+        ].join(" && "),
         options: {
           execOptions: {
             cwd: "test/fixtures/middleware_test_server"
@@ -73,8 +78,8 @@ function loadInstallTasks(grunt) {
         }
       },
 
-      "rsync-tsme-to-fixtures": {
-        command: "rsync -qa --del package.json middleware.js app test/fixtures/middleware_test_server/node_modules/tsme"
+      "mkdir-logs": {
+        command: "mkdir -p logs"
       },
 
       bower: {
