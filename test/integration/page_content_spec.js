@@ -14,8 +14,8 @@ describe("rendering of page content", function () {
               getPageSource().
               then(function (content) {
                 return (
-                    content.indexOf("<p>This page.  Is a page.</p>") > -1 &&
-                    content.indexOf("<p><a href=\"/about\">About page</a></p>") > -1
+                    /<p>This page.\s+Is a page.<\/p>/i.test(content) &&
+                    /<p><a href="\/about">About page<\/a><\/p>/i.test(content)
                 );
               }).
               then(null, function (err) { failTestOnError(err, done); });
