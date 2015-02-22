@@ -6,6 +6,7 @@ var express = require("express"),
 
     output = require("./output_helper"),
     helpers = require("./handlebars_helpers"),
+    testHelpers = require("quick-grunt-config-mocha-sauce/lib/helpers"),
 
     markdownEncoding,
     contentBasePath;
@@ -44,6 +45,7 @@ function configureAppForHandlebars(app) {
     partialsDir: path.join(contentBasePath, "templates/partials"),
     layoutsDir: path.join(contentBasePath, "templates/layouts")
   }));
+  testHelpers(hbs);
 }
 
 
