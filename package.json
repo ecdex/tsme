@@ -43,8 +43,8 @@
     "matchdep": "^0.3.0",
     "mocha-multi": "^0.6.0",
     "mocha-sauce-notifying-reporter": "^0.0.1",
-    "quick-grunt-config-coding-conventions": "0.0.2",
-    "quick-grunt-config-mocha-sauce": "0.0.1",
+    "quick-grunt-config-coding-conventions": "git://github.com/ecdex/quick-grunt-config-coding-conventions.git",
+    "quick-grunt-config-mocha-sauce": "git://github.com/ecdex/quick-grunt-config-mocha-sauce.git",
     "rewire": "^2.1.0",
     "should": "^5.0.0",
     "sinon": "^1.10.3"
