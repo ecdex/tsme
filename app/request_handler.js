@@ -6,9 +6,24 @@ var fs = require("fs"),
 
 function makeServer(markdownEncoding, contentBasePath) {
   function templateForPage(markdownPath) {
-    var fullPath = path.join(path.join(contentBasePath, "templates"), markdownPath+".hbs");
+    var fullPath, defaultPath;
     markdownPath = markdownPath.replace(/^\//, "");
-    return (fs.existsSync(fullPath)) ? markdownPath : "default";
+
+    do {
+      fullPath = path.join(path.join(contentBasePath, "templates"), markdownPath + ".hbs");
+      if (fs.existsSync(fullPath)) {
+        return markdownPath;
+      }
+
+      defaultPath = path.join(contentBasePath, "templates", markdownPath, "default.hbs");
+      if (fs.existsSync(defaultPath)) {
+        return path.join(markdownPath, "default");
+      }
+
+      markdownPath = markdownPath.replace(/[^\/]+$/, "");
+      markdownPath = markdownPath.replace(/\/$/, "");
+    } while (markdownPath !== "");
+    return "default";
   }
 
   return function (req, res, next) {
