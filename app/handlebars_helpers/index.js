@@ -8,16 +8,21 @@ var path = require("path"),
 
 helpers = {
   fromMarkdownFile: function (fileName, options) {
-    var markdownContent,
+    var markdownContent = "",
         markdownEncoding = options.data.root.markdownEncoding,
         contentPath = options.data.root.contentPath,
-        fullPath = path.join(contentPath, fileName+".md");
+        newPath, fullPath;
 
-    try {
-      markdownContent = fs.readFileSync(fullPath, { encoding: markdownEncoding });
-    } catch (e) {
-      markdownContent = "";
-    }
+    do {
+      fullPath = path.join(contentPath, fileName+".md");
+
+      try {
+        markdownContent = fs.readFileSync(fullPath, { encoding: markdownEncoding });
+      } catch (e) {
+        newPath = contentPath.replace(/\/[^\/]*$/, "");
+        contentPath = (newPath === contentPath) ? "" : newPath;
+      }
+    } while (markdownContent === "" && contentPath !== "");
 
     return new hbs.SafeString(marked(markdownContent));
   },
