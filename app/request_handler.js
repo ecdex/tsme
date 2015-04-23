@@ -31,6 +31,11 @@ function makeServer(markdownEncoding, contentBasePathIncoming) {
   contentBasePath = contentBasePathIncoming;
 
   var server = function (req, res, next) {
+    if (req.path.endsWith("/index")) {
+      res.redirect(req.path.replace(/\/index$/, "/"));
+      return;
+    }
+
     var markdownPath = req.path.replace(/\.[^.]+$/, "");
     if (markdownPath.endsWith("/")) {
       markdownPath += "index";

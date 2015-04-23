@@ -33,7 +33,8 @@ describe("request handling", function () {
     };
     res = {
       locals: {},
-      render: function () {}
+      render: function () {},
+      redirect: function () {}
     };
   });
 
@@ -139,29 +140,48 @@ describe("request handling", function () {
     it("finds the root default for a page in the root", function (done) {
       assertTemplateForPath("/some-page", "default", done);
     });
+
     it("finds a default in a directory below root for a page in that directory", function (done) {
       assertTemplateForPath("/a_directory/a_page", "a_directory/default", done);
     });
+
     it("finds a default in a directory below root for a page in a subdirectory without its own default", function (done) {
       assertTemplateForPath("/a_directory/one_subdirectory/x_page", "a_directory/default", done);
     });
+
     it("finds the root default for a page in a directory below root that doesn't contain a default", function (done) {
       assertTemplateForPath("/b_directory/b_page", "default", done);
     });
+
     it("finds the root default for a page in a path below root that doesn't contain any defaults", function (done) {
       assertTemplateForPath("/b_directory/one_subdirectory/one_page", "default", done);
     });
+
     it("finds a default in a subdirectory for a page in that directory", function (done) {
       assertTemplateForPath(
           "/b_directory/other_subdirectory/other_page",
           "b_directory/other_subdirectory/default",
           done);
     });
+
     it("finds a default in a subdirectory for a page that is in a matching sub-subdirectory", function (done) {
       assertTemplateForPath(
           "/b_directory/other_subdirectory/sub_sub_directory/page",
           "b_directory/other_subdirectory/default",
           done);
+    });
+  });
+
+  describe("redirects", function () {
+    it("from 'blah/blah/index' to 'blah/blah/'", function (done) {
+      req.path = "/a_directory/index";
+      var redirectStub = sandbox.stub(res, "redirect");
+
+      requestAndValidate(done);
+
+      redirectStub.calledOnce.should.equal(true);
+      redirectStub.firstCall.args.should.eql(["/a_directory/"]);
+      done();
     });
   });
 });
