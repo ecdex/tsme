@@ -31,7 +31,10 @@ describe("request handling", function () {
       params: {},
       route: {}
     };
-    res = { locals: {} };
+    res = {
+      locals: {},
+      render: function () {}
+    };
   });
 
   afterEach(function () {
@@ -47,7 +50,7 @@ describe("request handling", function () {
         done();
       };
 
-      requestAndValidate();
+      requestAndValidate(done);
     });
 
     it("uses content/templates/default.hbs when content/templates/index.hbs doesn't exist", function (done) {
@@ -59,7 +62,7 @@ describe("request handling", function () {
         done();
       };
 
-      requestAndValidate();
+      requestAndValidate(done);
     });
 
     it("uses content/templates/index.hbs when that exists", function (done) {
@@ -68,7 +71,7 @@ describe("request handling", function () {
         done();
       };
 
-      requestAndValidate();
+      requestAndValidate(done);
     });
   });
 
@@ -84,7 +87,7 @@ describe("request handling", function () {
           done();
         };
 
-        requestAndValidate();
+        requestAndValidate(done);
       });
 
       it("includes content from the page's markdown file", function (done) {
@@ -95,12 +98,34 @@ describe("request handling", function () {
           done();
         };
 
-        requestAndValidate();
+        requestAndValidate(done);
       });
     });
   });
 
-  describe("a page in a subdirectory", function () {
+  describe("finds index.md", function () {
+    function assertFileFoundForPath(path, expectedMdFilePath, done) {
+      req.path = path;
+      sandbox.stub(res, "render");
+      var templateStub = sandbox.stub(requestHandler, "templateForPage");
+
+      requestAndValidate(done);
+
+      templateStub.calledOnce.should.equal(true);
+      templateStub.firstCall.args.should.eql([expectedMdFilePath]);
+      done();
+    }
+
+    it("when the path ends in a slash", function (done) {
+      assertFileFoundForPath("/a_directory/", "/a_directory/index", done);
+    });
+
+    it("when the path could be a page name (doesn't end in a slash)", function (done) {
+      assertFileFoundForPath("/a_directory", "/a_directory/index", done);
+    });
+  });
+
+  describe("template finding for a page in a subdirectory", function () {
     function assertTemplateForPath(path, expectedTemplate, done) {
       req.path = path;
       res.render = function (templateName) {
@@ -108,7 +133,7 @@ describe("request handling", function () {
         done();
       };
 
-      requestAndValidate();
+      requestAndValidate(done);
     }
 
     it("finds the root default for a page in the root", function (done) {

@@ -2,34 +2,38 @@ require("string.prototype.endswith");
 
 var fs = require("fs"),
     path = require("path"),
-    marked = require("marked");
+    marked = require("marked"),
 
-function makeServer(markdownEncoding, contentBasePath) {
-  function templateForPage(markdownPath) {
-    var fullPath, defaultPath;
-    markdownPath = markdownPath.replace(/^\//, "");
+    contentBasePath;
 
-    do {
-      fullPath = path.join(path.join(contentBasePath, "templates"), markdownPath + ".hbs");
-      if (fs.existsSync(fullPath)) {
-        return markdownPath;
-      }
+function templateForPage(markdownPath) {
+  var fullPath, defaultPath;
+  markdownPath = markdownPath.replace(/^\//, "");
 
-      defaultPath = path.join(contentBasePath, "templates", markdownPath, "default.hbs");
-      if (fs.existsSync(defaultPath)) {
-        return path.join(markdownPath, "default");
-      }
+  do {
+    fullPath = path.join(path.join(contentBasePath, "templates"), markdownPath + ".hbs");
+    if (fs.existsSync(fullPath)) {
+      return markdownPath;
+    }
 
-      markdownPath = markdownPath.replace(/[^\/]+$/, "");
-      markdownPath = markdownPath.replace(/\/$/, "");
-    } while (markdownPath !== "");
-    return "default";
-  }
+    defaultPath = path.join(contentBasePath, "templates", markdownPath, "default.hbs");
+    if (fs.existsSync(defaultPath)) {
+      return path.join(markdownPath, "default");
+    }
 
-  return function (req, res, next) {
+    markdownPath = markdownPath.replace(/[^\/]+$/, "");
+    markdownPath = markdownPath.replace(/\/$/, "");
+  } while (markdownPath !== "");
+  return "default";
+}
+
+function makeServer(markdownEncoding, contentBasePathIncoming) {
+  contentBasePath = contentBasePathIncoming;
+
+  var server = function (req, res, next) {
     var markdownPath = req.path.replace(/\.[^.]+$/, "");
     if (markdownPath.endsWith("/")) {
-      markdownPath = markdownPath.replace(/\/$/, "/index");
+      markdownPath += "index";
     }
 
     var fullPath = path.join(path.join(contentBasePath, "pages"), markdownPath+".md"),
@@ -37,12 +41,18 @@ function makeServer(markdownEncoding, contentBasePath) {
     try {
       markdownContent = fs.readFileSync(fullPath, { encoding: markdownEncoding });
     } catch (e) {
-      next();
-      return;
+      markdownPath += "/index";
+      fullPath = path.join(path.join(contentBasePath, "pages"), markdownPath+".md");
+      try {
+        markdownContent = fs.readFileSync(fullPath, { encoding: markdownEncoding });
+      } catch (e) {
+        next();
+        return;
+      }
     }
 
     res.render(
-        templateForPage(markdownPath),
+        server.templateForPage(markdownPath),
         {
           contentFromMarkdown: marked(markdownContent),
           contentPath: fullPath.replace(/\/[^\/]+\.md$/, ""),
@@ -50,6 +60,9 @@ function makeServer(markdownEncoding, contentBasePath) {
         }
     );
   };
+
+  server.templateForPage = templateForPage;
+  return server;
 }
 
 module.exports = makeServer;
