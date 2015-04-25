@@ -1,3 +1,2 @@
 --timeout 500000
 --reporter mocha-multi
---no-exit
