@@ -8,7 +8,6 @@ var express = require("express"),
     helpers = require("./handlebars_helpers"),
     testHelpers = require("quick-grunt-config-mocha-sauce/lib/helpers"),
 
-    markdownEncoding,
     contentBasePath;
 
 function setContentBasePath() {
@@ -50,7 +49,6 @@ function configureAppForHandlebars(app) {
 
 
 function setup() {
-  markdownEncoding = config.content.encoding || "utf8";
   setContentBasePath();
 
   var app = express();
@@ -59,7 +57,7 @@ function setup() {
 
   var oneYear = 31536000000;
   app.use("/assets", express["static"]("public/assets", { maxAge: oneYear }));
-  app.use(require("./request_handler")(markdownEncoding, contentBasePath));
+  app.use(require("./request_handler")(config, contentBasePath));
   return app;
 }
 

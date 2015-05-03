@@ -3,10 +3,11 @@
 
 require("should");
 var sinon = require("sinon"),
+    environmental = require("environmental"),
+    config = environmental.config(),
 
     makeHandler = rewireInApp("request_handler"),
-    requestHandler = makeHandler("utf8", "content");
-
+    requestHandler = makeHandler(config, "content");
 
 
 // note:  this block runs in only one mode (stand-alone server or middleware)
@@ -40,6 +41,46 @@ describe("request handling", function () {
 
   afterEach(function () {
     sandbox.restore();
+  });
+
+  describe("markdownEncoding from config", function () {
+    var handler,
+        hadMarkdownEncodingKey, originalMarkdownEncoding,
+        meKey = "encoding";
+
+    beforeEach(function () {
+      hadMarkdownEncodingKey = (Object.keys(config.content).indexOf(meKey) > -1);
+      originalMarkdownEncoding = config.content[meKey];
+    });
+
+    afterEach(function () {
+      delete config.content[meKey];
+      if (hadMarkdownEncodingKey) {
+        config.content[meKey] = originalMarkdownEncoding;
+      }
+    });
+
+    function handleAndCheckEncoding(encoding, done) {
+      var renderStub = sandbox.stub(res, "render");
+      handler(req, res,
+        buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+
+      renderStub.calledOnce.should.equal(true);
+      renderStub.firstCall.args[1].markdownEncoding.should.eql(encoding);
+      done();
+    }
+
+    it("defaults to 'utf8'", function (done) {
+      delete config.content[meKey];
+      handler = makeHandler(config, "content");
+      handleAndCheckEncoding("utf8", done);
+    });
+
+    it("can be set from the configuration", function (done) {
+      config.content[meKey] = "ascii";
+      handler = makeHandler(config, "content");
+      handleAndCheckEncoding("ascii", done);
+    });
   });
 
   describe("for root it serves content/pages/index.md", function () {
@@ -181,6 +222,24 @@ describe("request handling", function () {
 
       redirectStub.calledOnce.should.equal(true);
       redirectStub.firstCall.args.should.eql(["/a_directory/"]);
+      done();
+    });
+  });
+
+  describe("allows host server of TSME middleware to supply a function to populate response context object", function () {
+    it("includes items returned by config.commonContext() in the context given to res.render()", function (done) {
+      config.commonContext = function () {
+        return { answer: 42, c: "is for cookie" };
+      };
+      var renderStub = sandbox.stub(res, "render"),
+          handler = makeHandler(config, "content");
+
+      handler(req, res,
+        buildFailureOnCall(done, "Express request handler should have responded but didn't"));
+
+      renderStub.calledOnce.should.equal(true);
+      renderStub.firstCall.args[1].answer.should.eql(42);
+      renderStub.firstCall.args[1].c.should.eql("is for cookie");
       done();
     });
   });

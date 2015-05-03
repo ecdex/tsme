@@ -2,8 +2,10 @@ require("string.prototype.endswith");
 
 var fs = require("fs"),
     path = require("path"),
+    _ = require("lodash"),
     marked = require("marked"),
 
+    config,
     contentBasePath;
 
 function templateForPage(markdownPath) {
@@ -27,10 +29,13 @@ function templateForPage(markdownPath) {
   return "default";
 }
 
-function makeServer(markdownEncoding, contentBasePathIncoming) {
+function makeServer(tsmeConfig, contentBasePathIncoming) {
+  config = tsmeConfig;
   contentBasePath = contentBasePathIncoming;
 
-  var server = function (req, res, next) {
+  var markdownEncoding = config.content.encoding || "utf8",
+      server;
+  server = function (req, res, next) {
     if (req.path.endsWith("/index")) {
       res.redirect(req.path.replace(/\/index$/, "/"));
       return;
@@ -56,13 +61,17 @@ function makeServer(markdownEncoding, contentBasePathIncoming) {
       }
     }
 
+    var context = {
+      contentFromMarkdown: marked(markdownContent),
+      contentPath: fullPath.replace(/\/[^\/]+\.md$/, ""),
+      markdownEncoding: markdownEncoding
+    };
+    if (config.commonContext) {
+      _.assign(context, config.commonContext());
+    }
     res.render(
         server.templateForPage(markdownPath),
-        {
-          contentFromMarkdown: marked(markdownContent),
-          contentPath: fullPath.replace(/\/[^\/]+\.md$/, ""),
-          markdownEncoding: markdownEncoding
-        }
+        context
     );
   };
 

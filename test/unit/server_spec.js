@@ -92,7 +92,9 @@ describe("top-level server", function () {
 
     beforeEach(function () {
       server.__set__("express", helpers.mockExpressFactory(expressStubContainer));
-      stdoutStub = sandbox.stub(server.__get__("output"), "stdout");
+      var outputHelper = server.__get__("output");
+      sandbox.stub(outputHelper, "terminalFailure");  // don't care
+      stdoutStub = sandbox.stub(outputHelper, "stdout");
     });
 
     function commonBehaviors(factory) {
@@ -123,19 +125,6 @@ describe("top-level server", function () {
         rootUseCalls.length.should.equal(1);
         rootUseCalls[0].length.should.equal(1);
         helpers.shouldBeAnInstanceOfExpress(rootUseCalls[0][0]);
-      });
-
-      describe("markdownEncoding", function () {
-        it("defaults to 'utf8'", function () {
-          factory();
-          server.__get__("markdownEncoding").should.equal("utf8");
-        });
-
-        it("can be set from the configuration", function () {
-          config.content.encoding = "utf32";
-          factory();
-          server.__get__("markdownEncoding").should.equal("utf32");
-        });
       });
 
       it("sets up for processing Handlebars", function () {
@@ -172,15 +161,15 @@ describe("top-level server", function () {
       });
 
       it("accepts an optional config hash", function () {
-        var notAnEncoding = "only-dingbats19";
+        var nonDefaultPath = "base/path/over/here";
         server.middleware({
           server: { port: 42 },
           content: {
-            basepath: "content",
-            encoding: notAnEncoding
+            basepath: nonDefaultPath,
+            encoding: "utf8"
           }
         });
-        server.__get__("markdownEncoding").should.equal(notAnEncoding);
+        server.__get__("contentBasePath").should.equal(nonDefaultPath);
       });
 
       commonBehaviors(server.middleware);
