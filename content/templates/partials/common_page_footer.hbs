@@ -1,10 +1,8 @@
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    {{#if productionLike}}
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    {{else}}
-      <script src="assets/js/jquery.min.js"></script>
-    {{/if}}
-
+    {{loadJs "bootstrap-js"
+        production_path="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+        development_path="assets/js/jquery.min.js"
+    }}
 
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     {{loadJs "bootstrap-js"
