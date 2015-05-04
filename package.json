@@ -1,6 +1,6 @@
 {
   "name"        : "tsme",
-  "version"     : "1.0.1",
+  "version"     : "1.0.2-pre",
   "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
   "keywords": [ "node", "express", "markdown", "bootstrap" ],
   "author"      : "Glen E. Ivey",
