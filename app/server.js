@@ -57,6 +57,7 @@ function setup() {
 
   var oneYear = 31536000000;
   app.use("/assets", express["static"]("public/assets", { maxAge: oneYear }));
+  app.use("/", express["static"]("public/", { maxAge: oneYear }));
   app.use(require("./request_handler")(config, contentBasePath));
   return app;
 }
