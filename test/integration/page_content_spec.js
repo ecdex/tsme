@@ -1,15 +1,16 @@
-/*globals driver, failTestOnError, describe, it */
+/*globals driver, failTestOnError */
 /*jshint expr:true*/
 
-var config = require("environmental").config();
+var test = require("../../node_modules/quick-grunt-config-mocha-sauce/node_modules/selenium-webdriver/testing"),
+    config = require("environmental").config();
 
-describe("rendering of page content", function () {
-  it("pages contain content from their markdown plus their template's markdown", function (done) {
+test.describe("rendering of page content", function () {
+  test.it("pages contain content from their markdown plus their template's markdown", function () {
     var rootPath = config.integration.root;
 
     driver.get("http://localhost:3000" + rootPath + "some-page");
-    driver.
-        wait(function () {
+    driver
+        .wait(function () {
           return driver.
               getPageSource().
               then(function (content) {
@@ -18,9 +19,8 @@ describe("rendering of page content", function () {
                     /<p><a href="\/about">About page<\/a><\/p>/i.test(content)
                 );
               }).
-              then(null, function (err) { failTestOnError(err, done); });
-        }, 5000).
-        then(function () { done(); }).
-        then(null, function (err) { failTestOnError(err, done); });
+              then(null, function (err) { failTestOnError(err); });
+        }, 5000)
+        .then(null, function (err) { failTestOnError(err); });
   });
 });
