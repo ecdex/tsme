@@ -18,7 +18,7 @@
   },
   "engines": {
     "node": "~0.10.0",
-    "npm": "2.1.6"
+    "npm": "~2.10.1"
   },
   "dependencies": {
     "bluebird": "^2.9.6",
