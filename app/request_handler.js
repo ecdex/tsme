@@ -66,8 +66,14 @@ function makeServer(tsmeConfig, contentBasePathIncoming) {
       contentPath: fullPath.replace(/\/[^\/]+\.md$/, ""),
       markdownEncoding: markdownEncoding
     };
+    if (req.flash) {
+      var flashes = req.flash();
+      if (flashes.error) {
+        context.flashError = flashes.error;
+      }
+    }
     if (config.commonContext) {
-      _.assign(context, config.commonContext());
+      _.assign(context, config.commonContext(req));
     }
     res.render(
         server.templateForPage(markdownPath),
