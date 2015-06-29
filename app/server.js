@@ -8,6 +8,7 @@ var express = require("express"),
     helpers = require("./handlebars_helpers"),
     testHelpers = require("quick-grunt-config-mocha-sauce/lib/helpers"),
 
+    middlewareFactory,
     contentBasePath;
 
 function setContentBasePath() {
@@ -44,7 +45,9 @@ function configureAppForHandlebars(app) {
     partialsDir: path.join(contentBasePath, "templates/partials"),
     layoutsDir: path.join(contentBasePath, "templates/layouts")
   }));
+
   testHelpers(hbs);
+  middlewareFactory.handlebarsInstance = hbs;
 }
 
 
@@ -68,10 +71,10 @@ function serverFactory() {
   output.stdout("Express server listening on port " + port);
 }
 
-function middlewareFactory(hostAppConfig) {
+middlewareFactory = function (hostAppConfig) {
   config = hostAppConfig || config;
   return setup();
-}
+};
 
 module.exports = {
   launch: serverFactory,

@@ -27,6 +27,7 @@
     "express-hbs": "^0.8.0",
     "lodash": "^3.1.0",
     "marked": "^0.3.3",
+    "quick-grunt-config-mocha-sauce": "git://github.com/ecdex/quick-grunt-config-mocha-sauce.git",
     "string.prototype.endswith": "^0.2.0"
   },
   "devDependencies": {
@@ -44,7 +45,6 @@
     "mocha-multi": "^0.7.1",
     "mocha-sauce-notifying-reporter": "^0.0.1",
     "quick-grunt-config-coding-conventions": "git://github.com/ecdex/quick-grunt-config-coding-conventions.git",
-    "quick-grunt-config-mocha-sauce": "git://github.com/ecdex/quick-grunt-config-mocha-sauce.git",
     "rewire": "^2.1.0",
     "should": "^6.0.3",
     "sinon": "^1.10.3"
