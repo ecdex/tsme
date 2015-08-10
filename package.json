@@ -17,8 +17,8 @@
     "test":  "grunt validate"
   },
   "engines": {
-    "node": "~0.10.0",
-    "npm": "~2.10.1"
+    "node": "~0.10.39",
+    "npm": "~2.11.3"
   },
   "dependencies": {
     "bluebird": "^2.9.6",
