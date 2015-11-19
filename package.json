@@ -1,6 +1,6 @@
 {
   "name"        : "tsme",
-  "version"     : "1.0.2",
+  "version"     : "1.0.3pre",
   "description" : "Trivial Server for Markdown via Express.  Runs stand-alone or as middleware.  Includes Bootstrap-based example content",
   "keywords": [ "node", "express", "markdown", "bootstrap" ],
   "author"      : "Glen E. Ivey",
@@ -21,12 +21,12 @@
     "npm": "~2.11.3"
   },
   "dependencies": {
-    "bluebird": "^2.9.6",
+    "bluebird": "^3.0.5",
     "environmental": "^1.2.0",
-    "express": "~4.12.1",
-    "express-hbs": "^0.8.0",
-    "lodash": "^3.1.0",
-    "marked": "^0.3.3",
+    "express": "~4.13.3",
+    "express-hbs": "^0.8.4",
+    "lodash": "^3.10.1",
+    "marked": "^0.3.5",
     "quick-grunt-config-mocha-sauce": "git://github.com/ecdex/quick-grunt-config-mocha-sauce.git",
     "string.prototype.endswith": "^0.2.0"
   },
@@ -38,15 +38,15 @@
     "grunt-env": "~0.4.2",
     "grunt-environmental": "^0.1.0",
     "grunt-express-server": "git://github.com/ericclemmons/grunt-express-server.git",
-    "grunt-jscs": "^1.2.0",
-    "grunt-mocha-cli": "^1.10.0",
+    "grunt-jscs": "^2.3.0",
+    "grunt-mocha-cli": "^2.0.0",
     "grunt-shell": "^1.1.1",
-    "matchdep": "^0.3.0",
-    "mocha-multi": "^0.7.1",
-    "mocha-sauce-notifying-reporter": "^0.0.1",
+    "matchdep": "^1.0.0",
+    "mocha-multi": "^0.7.2",
+    "mocha-sauce-notifying-reporter": "^0.0.2",
     "quick-grunt-config-coding-conventions": "git://github.com/ecdex/quick-grunt-config-coding-conventions.git",
     "rewire": "^2.1.0",
-    "should": "^6.0.3",
+    "should": "^7.1.1",
     "sinon": "^1.10.3"
   }
 }

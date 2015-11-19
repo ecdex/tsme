@@ -27,13 +27,13 @@ helpers = {
     factory = sinon.spy(factory);
     expressStubContainer.expressStub = factory;
 
-    var static = function () {
+    var staticStub = function () {
       return {
         spyFunctionName: "static",
         arguments: arguments
       };
     };
-    factory.static = sinon.spy(static);
+    factory.static = sinon.spy(staticStub);
 
     return factory;
   }
